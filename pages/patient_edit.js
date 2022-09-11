@@ -221,7 +221,7 @@ export default function Home(props) {
                     problems?
                 </p>
 
-                <div className="grid grid-cols-4 gap-6">
+                <div className="grid md:grid-cols-4 gap-6">
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">
                             GENERAL
@@ -361,7 +361,8 @@ export default function Home(props) {
 
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">
-                            WOMEN ONLY
+                            WOMEN ONLY{" "}
+                            <span className="text-sm">(if applicable)</span>
                         </p>
 
                         <div className="ml-8">

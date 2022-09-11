@@ -1,7 +1,5 @@
-import { ConnectKitButton } from "connectkit";
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "../Components/Header/Navbar";
 
 export default function Home() {
     return (
@@ -15,14 +13,14 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Navbar />
-            <div>
-                <h1 className="text-8xl text-center mt-20 font-bold">
+            {/* <Navbar /> */}
+            <div className="grid v-screen place-items-center mt-10">
+                <h1 className="text-5xl md:text-8xl text-center mt-20 font-bold">
                     Protecc
                 </h1>
 
                 <div>
-                    <p className="text-2xl px-20 mt-7 text-center">
+                    <p className="px-10 md:text-2xl px-20 mt-7 text-center">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Donec facilisis ex nec ipsum molestie, a lacinia arcu
                         sollicitudin. Aenean justo lacus, euismod molestie
@@ -33,11 +31,19 @@ export default function Home() {
                 </div>
 
                 <div className="grid v-screen place-items-center mt-10">
-                    <Link href="/home">
-                        <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            Get Started
-                        </button>
-                    </Link>
+                    <div className="grid-cols-2">
+                        <Link href="/patient_home">
+                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Sign in as Patient
+                            </button>
+                        </Link>
+
+                        <Link href="/doctor_home">
+                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                Sign in as Doctor
+                            </button>
+                        </Link>
+                    </div>
                 </div>
             </div>
         </div>
