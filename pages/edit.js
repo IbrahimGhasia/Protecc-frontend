@@ -32,10 +32,13 @@ export default function Home(props) {
     const marStatusRef = useRef();
     const currentSymptomsRef = useRef();
     const otherConsultanceRef = useRef();
+    const familyDiseaseRef = useRef();
+    const socialHistoryRef = useRef();
+    const alergiesRef = useRef();
 
     /*------ Submit Button Handler ------*/
     const submitData = (event) => {
-        // event.preventDefault();
+        event.preventDefault();
         const editFormData = {
             FirstName: fnameRef.current.value,
             LastName: lnameRef.current.value,
@@ -48,6 +51,9 @@ export default function Home(props) {
             MaratialStatus: marStatusRef.current.value,
             CurrentSymptoms: currentSymptomsRef.current.value,
             OtherConsultance: otherConsultanceRef.current.value,
+            FamilyDiseases: familyDiseaseRef.current.value,
+            SocialHistory: socialHistoryRef.current.value,
+            alergiesRef: alergiesRef.current.value,
         };
         console.log(editFormData);
         console.log(medHisChecked);
@@ -350,28 +356,6 @@ export default function Home(props) {
                             <Checkbox label="Stomach Pain" />
                             <Checkbox label="Vomiting" />
                             <Checkbox label="Yellow Jaundice" />
-                            <Checkbox label="Increasing Constipation" />
-                            <Checkbox label="Persistent Diarrhea" />
-                            <Checkbox label="Blood in stools" />
-                            <Checkbox label="Black stools" />
-                        </div>
-                    </div>
-
-                    <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            PSYCHIATRIC
-                        </p>
-
-                        <div className="ml-8">
-                            <Checkbox label="Depression" />
-                            <Checkbox label="Excessive worries" />
-                            <Checkbox label="Difficuly falling asleep" />
-                            <Checkbox label="Difficuly staying asleep" />
-                            <Checkbox label="Difficuly with sexual arousal" />
-                            <Checkbox label="Poor appetite" />
-                            <Checkbox label="Food cravings" />
-                            <Checkbox label="Frequent crying" />
-                            <Checkbox label="Sensitivity" />
                         </div>
                     </div>
 
@@ -389,9 +373,33 @@ export default function Home(props) {
                     </div>
                 </div>
 
+                <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+
+                <div className="grid gap-6 mb-6 md:grid-cols-3 px-8 mt-5">
+                    <Input
+                        type="text"
+                        label="Family Diseases"
+                        placeholder="Enter your Family Diseases"
+                        ref={familyDiseaseRef}
+                    />
+                    <Input
+                        type="text"
+                        label="Social History (Habits, recent travels, exposure to pets)"
+                        placeholder="Enter your Social History"
+                        ref={socialHistoryRef}
+                    />
+
+                    <Input
+                        type="text"
+                        label="Alergies"
+                        placeholder="Specify Alergies If you have any"
+                        ref={alergiesRef}
+                    />
+                </div>
+
                 <div className="text-center">
                     <button
-                        // type="submit"
+                        type="submit"
                         onClick={submitData}
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
