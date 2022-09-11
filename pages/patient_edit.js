@@ -1,44 +1,44 @@
-import Input from "../Components/UI/Input";
-import Select from "../Components/UI/Select";
-import Navbar from "../Components/Header/Navbar";
-import TextArea from "../Components/UI/TextArea";
-import { useRef, useState } from "react";
-import Checkbox from "../Components/UI/Checkbox";
+import Input from "../Components/UI/Input"
+import Select from "../Components/UI/Select"
+import Navbar from "../Components/Header/Navbar"
+import TextArea from "../Components/UI/TextArea"
+import { useRef, useState } from "react"
+import Checkbox from "../Components/UI/Checkbox"
 
 export default function Home(props) {
     // For geting checkbox values ...
-    const [medHisChecked, setMedHisChecked] = useState([]);
+    const [medHisChecked, setMedHisChecked] = useState([])
 
     const handleMedHisCheck = (event) => {
-        let updatedList = [...medHisChecked];
+        let updatedList = [...medHisChecked]
         if (event.target.checked) {
-            updatedList = [...medHisChecked, event.target.value];
+            updatedList = [...medHisChecked, event.target.value]
         } else {
-            updatedList.splice(medHisChecked.indexOf(event.target.value), 1);
+            updatedList.splice(medHisChecked.indexOf(event.target.value), 1)
         }
-        setMedHisChecked(updatedList);
-    };
+        setMedHisChecked(updatedList)
+    }
 
     /*------ Refs ------*/
-    const fnameRef = useRef();
-    const lnameRef = useRef();
-    const ageRef = useRef();
-    const sexRef = useRef();
-    const dobRef = useRef();
-    const occupationRef = useRef();
-    const emrgencyContactRef = useRef();
-    const aadhaarIDRef = useRef();
-    const addressRef = useRef();
-    const marStatusRef = useRef();
-    const currentSymptomsRef = useRef();
-    const otherConsultanceRef = useRef();
-    const familyDiseaseRef = useRef();
-    const socialHistoryRef = useRef();
-    const alergiesRef = useRef();
+    const fnameRef = useRef()
+    const lnameRef = useRef()
+    const ageRef = useRef()
+    const sexRef = useRef()
+    const dobRef = useRef()
+    const occupationRef = useRef()
+    const emrgencyContactRef = useRef()
+    const aadhaarIDRef = useRef()
+    const addressRef = useRef()
+    const marStatusRef = useRef()
+    const currentSymptomsRef = useRef()
+    const otherConsultanceRef = useRef()
+    const familyDiseaseRef = useRef()
+    const socialHistoryRef = useRef()
+    const alergiesRef = useRef()
 
     /*------ Submit Button Handler ------*/
     const submitData = (event) => {
-        event.preventDefault();
+        event.preventDefault()
         const editFormData = {
             FirstName: fnameRef.current.value,
             LastName: lnameRef.current.value,
@@ -54,10 +54,10 @@ export default function Home(props) {
             FamilyDiseases: familyDiseaseRef.current.value,
             SocialHistory: socialHistoryRef.current.value,
             alergiesRef: alergiesRef.current.value,
-        };
-        console.log(editFormData);
-        console.log(medHisChecked);
-    };
+        }
+        console.log(editFormData)
+        console.log(medHisChecked)
+    }
 
     return (
         <div>
@@ -83,12 +83,7 @@ export default function Home(props) {
                 </div>
 
                 <div className="grid gap-6 mb-6 md:grid-cols-3 px-8">
-                    <Input
-                        type="number"
-                        label="Age"
-                        placeholder="Enter Your Age"
-                        ref={ageRef}
-                    />
+                    <Input type="number" label="Age" placeholder="Enter Your Age" ref={ageRef} />
 
                     <Select
                         label="Sex"
@@ -146,9 +141,7 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <h3 className="text-xl px-8 font-bold">
-                        Medical Information
-                    </h3>
+                    <h3 className="text-xl px-8 font-bold">Medical Information</h3>
                     <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
                 </div>
 
@@ -166,15 +159,11 @@ export default function Home(props) {
                 </div>
 
                 <div>
-                    <h3 className="text-xl px-8 font-bold">
-                        Past Medical History
-                    </h3>
+                    <h3 className="text-xl px-8 font-bold">Past Medical History</h3>
                     <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
                 </div>
 
-                <p className="text-lg px-8">
-                    Do you now or have you ever had :
-                </p>
+                <p className="text-lg px-8">Do you now or have you ever had :</p>
                 <div className="flex items-center mr-4 px-8 mt-4">
                     <div
                         className="grid gap-6 mb-6 md:grid-cols-5 px-8"
@@ -217,15 +206,12 @@ export default function Home(props) {
                 </div>
 
                 <p className="text-lg px-8 mb-4">
-                    In the past month, have you had any of the following
-                    problems?
+                    In the past month, have you had any of the following problems?
                 </p>
 
                 <div className="grid md:grid-cols-4 gap-6">
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            GENERAL
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">GENERAL</p>
 
                         <div className="ml-8">
                             <Checkbox label="Recent Weight Gain" />
@@ -238,9 +224,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            MUSCLE/JOINTS/BONES
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">MUSCLE/JOINTS/BONES</p>
 
                         <div className="ml-8">
                             <Checkbox label="Numbness" />
@@ -272,9 +256,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            THROAT
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">THROAT</p>
 
                         <div className="ml-8">
                             <Checkbox label="Frequent sore throats" />
@@ -285,9 +267,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            HEART AND LUNGS
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">HEART AND LUNGS</p>
 
                         <div className="ml-8">
                             <Checkbox label="Chest Pain" />
@@ -300,9 +280,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            Nervous System
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">Nervous System</p>
 
                         <div className="ml-8">
                             <Checkbox label="Headaches" />
@@ -335,9 +313,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            KIDNEY/URINE/BLADDER
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">KIDNEY/URINE/BLADDER</p>
 
                         <div className="ml-8">
                             <Checkbox label="Frequent or painfull urination" />
@@ -346,9 +322,7 @@ export default function Home(props) {
                     </div>
 
                     <div>
-                        <p className="text-lg px-8 font-semibold ml-8">
-                            STOMACH AND INTENSTINES
-                        </p>
+                        <p className="text-lg px-8 font-semibold ml-8">STOMACH AND INTENSTINES</p>
 
                         <div className="ml-8">
                             <Checkbox label="Nausea" />
@@ -361,8 +335,7 @@ export default function Home(props) {
 
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">
-                            WOMEN ONLY{" "}
-                            <span className="text-sm">(if applicable)</span>
+                            WOMEN ONLY <span className="text-sm">(if applicable)</span>
                         </p>
 
                         <div className="ml-8">
@@ -409,5 +382,5 @@ export default function Home(props) {
                 </div>
             </form>
         </div>
-    );
+    )
 }

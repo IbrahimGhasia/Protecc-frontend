@@ -1,8 +1,8 @@
-import Navbar_Doc from "../Components/Header/Navbar_Doc";
-import FileInput from "../Components/UI/FileInput";
-import Input from "../Components/UI/Input";
-import Select from "../Components/UI/Select";
-import TextArea from "../Components/UI/TextArea";
+import Navbar_Doc from "../Components/Header/Navbar_Doc"
+import FileInput from "../Components/UI/FileInput"
+import Input from "../Components/UI/Input"
+import Select from "../Components/UI/Select"
+import TextArea from "../Components/UI/TextArea"
 
 export default function Home() {
     return (
@@ -34,21 +34,9 @@ export default function Home() {
                         placeholder="Enter your specialisation"
                         // ref={fnameRef}
                     />
-                    <Input
-                        type="text"
-                        label="Country"
-                        placeholder="Enter name of your country"
-                    />
-                    <Input
-                        type="text"
-                        label="State"
-                        placeholder="Enter name of your state"
-                    />
-                    <Input
-                        type="text"
-                        label="City"
-                        placeholder="Enter name of your city"
-                    />
+                    <Input type="text" label="Country" placeholder="Enter name of your country" />
+                    <Input type="text" label="State" placeholder="Enter name of your state" />
+                    <Input type="text" label="City" placeholder="Enter name of your city" />
                     <Select
                         label="Gender"
                         title="Select your Gender"
@@ -86,9 +74,7 @@ export default function Home() {
                     <FileInput label="Medical Registration Proof" />
                 </div>
 
-                <h3 className="text-xl px-8 font-bold">
-                    Educational Qualification
-                </h3>
+                <h3 className="text-xl px-8 font-bold">Educational Qualification</h3>
                 <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
 
                 <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
@@ -132,5 +118,5 @@ export default function Home() {
                 </div>
             </form>
         </div>
-    );
+    )
 }
