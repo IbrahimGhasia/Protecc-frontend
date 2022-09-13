@@ -8,6 +8,8 @@ import toast, { Toaster } from "react-hot-toast"
 import ErrorModal from "../Components/UI/ErrorModal"
 
 export default function Home(props) {
+    const [error, setError] = useState(false)
+
     /*----------------------------- For Getting CheckBox Values UseState's ------------------------- */
     const [medHisChecked, setMedHisChecked] = useState([])
 
@@ -23,8 +25,6 @@ export default function Home(props) {
     const [eyesChecked, setEyesChecked] = useState([])
     const [skinChecked, setSkinChecked] = useState([])
     const [womenOnlyChecked, setWomenOnlyChecked] = useState([])
-
-    const [error, setError] = useState(false)
 
     /*----------------------------- Handle Events For CheckBox Values ------------------------------------- */
 

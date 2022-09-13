@@ -29,6 +29,9 @@ export default function Home() {
     const fullNameRef = useRef()
     const mobileNoRef = useRef()
     const specializationRef = useRef()
+    const countryRef = useRef()
+    const stateRef = useRef()
+    const cityRef = useRef()
     const genderRef = useRef()
     const medRegistrationRef = useRef()
     const registrationYearRef = useRef()
@@ -42,6 +45,26 @@ export default function Home() {
     const submitData = (event) => {
         // event.preventDefault()
         // console.log(medRegistrationProofRef.current.files[1].name)
+
+        /* ------------------------------ JSON Object of all Values ------------------------------------------*/
+        const doctorEditFormData = {
+            FullName: fullNameRef.current.value,
+            MobileNo: mobileNoRef.current.value,
+            Specialization: specializationRef.current.value,
+            Country: countryRef.current.value,
+            State: stateRef.current.value,
+            City: cityRef.current.value,
+            Gender: genderRef.current.value,
+            MedicalRegistrationNumber: medRegistrationRef.current.value,
+            RegistrationYear: registrationYearRef.current.value,
+            RegistrationCouncil: registrationCouncilRef.current.value,
+            EducationalDegree: eduDegreeRef.current.value,
+            CollegeUniversity: collegeRef.current.value,
+            YearOfCompletetion: yearOfCompletionRef.current.value,
+            Experience: experienceRef.current.value,
+        }
+
+        console.log(doctorEditFormData)
     }
 
     return (
@@ -82,18 +105,21 @@ export default function Home() {
                         label="Country"
                         placeholder="Enter name of your country"
                         required="required"
+                        ref={countryRef}
                     />
                     <Input
                         type="text"
                         label="State"
                         placeholder="Enter name of your state"
                         required="required"
+                        ref={stateRef}
                     />
                     <Input
                         type="text"
                         label="City"
                         placeholder="Enter name of your city"
                         required="required"
+                        ref={cityRef}
                     />
                     <Select
                         label="Gender"
