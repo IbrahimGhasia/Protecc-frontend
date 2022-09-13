@@ -2,12 +2,31 @@ import Input from "../Components/UI/Input"
 import Select from "../Components/UI/Select"
 import Navbar from "../Components/Header/Navbar"
 import TextArea from "../Components/UI/TextArea"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Checkbox from "../Components/UI/Checkbox"
+import toast, { Toaster } from "react-hot-toast"
+import ErrorModal from "../Components/UI/ErrorModal"
 
 export default function Home(props) {
-    // For geting checkbox values ...
+    /*----------------------------- For Getting CheckBox Values UseState's ------------------------- */
     const [medHisChecked, setMedHisChecked] = useState([])
+
+    const [generalChecked, setGeneralChecked] = useState([])
+    const [throatChecked, setThroatChecked] = useState([])
+    const [bloodChecked, setBloodChecked] = useState([])
+    const [muscleChecked, setMuscleChecked] = useState([])
+    const [heartAndLungsChecked, setHeartAndLungsChecked] = useState([])
+    const [kidneyChecked, setKidneyChecked] = useState([])
+    const [earsChecked, setEarsChecked] = useState([])
+    const [nervousChecked, setNervousChecked] = useState([])
+    const [stomachChecked, setStomachChecked] = useState([])
+    const [eyesChecked, setEyesChecked] = useState([])
+    const [skinChecked, setSkinChecked] = useState([])
+    const [womenOnlyChecked, setWomenOnlyChecked] = useState([])
+
+    const [error, setError] = useState(false)
+
+    /*----------------------------- Handle Events For CheckBox Values ------------------------------------- */
 
     const handleMedHisCheck = (event) => {
         let updatedList = [...medHisChecked]
@@ -19,7 +38,127 @@ export default function Home(props) {
         setMedHisChecked(updatedList)
     }
 
-    /*------ Refs ------*/
+    const handleGeneralCheck = (event) => {
+        let updatedList = [...generalChecked]
+        if (event.target.checked) {
+            updatedList = [...generalChecked, event.target.value]
+        } else {
+            updatedList.splice(generalChecked.indexOf(event.target.value), 1)
+        }
+        setGeneralChecked(updatedList)
+    }
+
+    const handleThroatCheck = (event) => {
+        let updatedList = [...throatChecked]
+        if (event.target.checked) {
+            updatedList = [...throatChecked, event.target.value]
+        } else {
+            updatedList.splice(throatChecked.indexOf(event.target.value), 1)
+        }
+        setThroatChecked(updatedList)
+    }
+
+    const handleBloodCheck = (event) => {
+        let updatedList = [...bloodChecked]
+        if (event.target.checked) {
+            updatedList = [...bloodChecked, event.target.value]
+        } else {
+            updatedList.splice(bloodChecked.indexOf(event.target.value), 1)
+        }
+        setBloodChecked(updatedList)
+    }
+
+    const handleMuscleCheck = (event) => {
+        let updatedList = [...muscleChecked]
+        if (event.target.checked) {
+            updatedList = [...muscleChecked, event.target.value]
+        } else {
+            updatedList.splice(muscleChecked.indexOf(event.target.value), 1)
+        }
+        setMuscleChecked(updatedList)
+    }
+
+    const handleHeartAndLungsCheck = (event) => {
+        let updatedList = [...heartAndLungsChecked]
+        if (event.target.checked) {
+            updatedList = [...heartAndLungsChecked, event.target.value]
+        } else {
+            updatedList.splice(heartAndLungsChecked.indexOf(event.target.value), 1)
+        }
+        setHeartAndLungsChecked(updatedList)
+    }
+
+    const handleKidneyCheck = (event) => {
+        let updatedList = [...kidneyChecked]
+        if (event.target.checked) {
+            updatedList = [...kidneyChecked, event.target.value]
+        } else {
+            updatedList.splice(kidneyChecked.indexOf(event.target.value), 1)
+        }
+        setKidneyChecked(updatedList)
+    }
+
+    const handleEarsCheck = (event) => {
+        let updatedList = [...earsChecked]
+        if (event.target.checked) {
+            updatedList = [...earsChecked, event.target.value]
+        } else {
+            updatedList.splice(earsChecked.indexOf(event.target.value), 1)
+        }
+        setEarsChecked(updatedList)
+    }
+
+    const handleNervousSystemCheck = (event) => {
+        let updatedList = [...nervousChecked]
+        if (event.target.checked) {
+            updatedList = [...nervousChecked, event.target.value]
+        } else {
+            updatedList.splice(nervousChecked.indexOf(event.target.value), 1)
+        }
+        setNervousChecked(updatedList)
+    }
+
+    const handleStomachCheck = (event) => {
+        let updatedList = [...stomachChecked]
+        if (event.target.checked) {
+            updatedList = [...stomachChecked, event.target.value]
+        } else {
+            updatedList.splice(stomachChecked.indexOf(event.target.value), 1)
+        }
+        setStomachChecked(updatedList)
+    }
+
+    const handleEyesCheck = (event) => {
+        let updatedList = [...eyesChecked]
+        if (event.target.checked) {
+            updatedList = [...eyesChecked, event.target.value]
+        } else {
+            updatedList.splice(eyesChecked.indexOf(event.target.value), 1)
+        }
+        setEyesChecked(updatedList)
+    }
+
+    const handleSkinCheck = (event) => {
+        let updatedList = [...skinChecked]
+        if (event.target.checked) {
+            updatedList = [...skinChecked, event.target.value]
+        } else {
+            updatedList.splice(skinChecked.indexOf(event.target.value), 1)
+        }
+        setSkinChecked(updatedList)
+    }
+
+    const handleWomenOnlyCheck = (event) => {
+        let updatedList = [...womenOnlyChecked]
+        if (event.target.checked) {
+            updatedList = [...womenOnlyChecked, event.target.value]
+        } else {
+            updatedList.splice(womenOnlyChecked.indexOf(event.target.value), 1)
+        }
+        setWomenOnlyChecked(updatedList)
+    }
+
+    /*----------------------------------- Refs For Storing Input Data ----------------------------------------*/
     const fnameRef = useRef()
     const lnameRef = useRef()
     const ageRef = useRef()
@@ -36,9 +175,11 @@ export default function Home(props) {
     const socialHistoryRef = useRef()
     const alergiesRef = useRef()
 
-    /*------ Submit Button Handler ------*/
+    /*----------------------------------------- Submit Button Handler ---------------------------------------*/
     const submitData = (event) => {
-        event.preventDefault()
+        // event.preventDefault()
+
+        /* ------------------------------ JSON Object of all Values ------------------------------------------*/
         const editFormData = {
             FirstName: fnameRef.current.value,
             LastName: lnameRef.current.value,
@@ -53,15 +194,30 @@ export default function Home(props) {
             OtherConsultance: otherConsultanceRef.current.value,
             FamilyDiseases: familyDiseaseRef.current.value,
             SocialHistory: socialHistoryRef.current.value,
-            alergiesRef: alergiesRef.current.value,
+            Alergies: alergiesRef.current.value,
+            PastMedicalHistory: medHisChecked,
+            SystemReview: {
+                General: generalChecked,
+                Throat: throatChecked,
+                Blood: bloodChecked,
+                Muscle: muscleChecked,
+                HeartAndLungs: heartAndLungsChecked,
+                Kidney: kidneyChecked,
+                Ears: earsChecked,
+                NervousSystem: nervousChecked,
+                Stomach: stomachChecked,
+                Eyes: eyesChecked,
+                Skin: skinChecked,
+                WomenOnly: womenOnlyChecked,
+            },
         }
         console.log(editFormData)
-        console.log(medHisChecked)
     }
 
     return (
         <div>
             <Navbar />
+
             <div>
                 <h3 className="text-xl px-8 font-bold">Personal Information</h3>
                 <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
@@ -73,17 +229,25 @@ export default function Home(props) {
                         label="First Name"
                         placeholder="Enter Your First Name"
                         ref={fnameRef}
+                        required={true}
                     />
                     <Input
                         type="text"
                         label="Last Name"
                         placeholder="Enter Your Last Name"
                         ref={lnameRef}
+                        required={true}
                     />
                 </div>
 
                 <div className="grid gap-6 mb-6 md:grid-cols-3 px-8">
-                    <Input type="number" label="Age" placeholder="Enter Your Age" ref={ageRef} />
+                    <Input
+                        type="number"
+                        label="Age"
+                        placeholder="Enter Your Age"
+                        ref={ageRef}
+                        required={true}
+                    />
 
                     <Select
                         label="Sex"
@@ -100,6 +264,7 @@ export default function Home(props) {
                         label="Date of Birth"
                         placeholder="Enter your Date of Birth"
                         ref={dobRef}
+                        required={true}
                     />
                 </div>
 
@@ -109,6 +274,7 @@ export default function Home(props) {
                         label="Occupation"
                         placeholder="Enter your Occupation"
                         ref={occupationRef}
+                        required={true}
                     />
 
                     <Input
@@ -116,6 +282,7 @@ export default function Home(props) {
                         label="Emergency Contact"
                         placeholder="Enter Emergency Contact"
                         ref={emrgencyContactRef}
+                        required={true}
                     />
 
                     <Input
@@ -123,6 +290,7 @@ export default function Home(props) {
                         label="Aadhaar ID"
                         placeholder="Enter your Aadhaar Card Number"
                         ref={aadhaarIDRef}
+                        required={true}
                     />
                 </div>
 
@@ -131,12 +299,14 @@ export default function Home(props) {
                         label="Address"
                         placeholder="Enter your permanent address"
                         ref={addressRef}
+                        required={true}
                     />
                     <Input
                         type="text"
                         label="Marital Status"
                         placeholder="Enter your Martial Status"
                         ref={marStatusRef}
+                        required={true}
                     />
                 </div>
 
@@ -213,7 +383,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">GENERAL</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleGeneralCheck}>
                             <Checkbox label="Recent Weight Gain" />
                             <Checkbox label="Recent Weight Loss" />
                             <Checkbox label="Fatigue" />
@@ -226,7 +396,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">MUSCLE/JOINTS/BONES</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleMuscleCheck}>
                             <Checkbox label="Numbness" />
                             <Checkbox label="Joint Pain" />
                             <Checkbox label="Muscle Weakness" />
@@ -237,7 +407,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">EARS</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleEarsCheck}>
                             <Checkbox label="Ringing in ears" />
                             <Checkbox label="Loss of hearing" />
                         </div>
@@ -246,7 +416,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">EYES</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleEyesCheck}>
                             <Checkbox label="Pain" />
                             <Checkbox label="Redness" />
                             <Checkbox label="Loss of vision" />
@@ -258,7 +428,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">THROAT</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleThroatCheck}>
                             <Checkbox label="Frequent sore throats" />
                             <Checkbox label="Hoarseness" />
                             <Checkbox label="Difficulty in swalling" />
@@ -269,7 +439,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">HEART AND LUNGS</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleHeartAndLungsCheck}>
                             <Checkbox label="Chest Pain" />
                             <Checkbox label="Palpitations" />
                             <Checkbox label="Shortness of breath" />
@@ -282,7 +452,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">Nervous System</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleNervousSystemCheck}>
                             <Checkbox label="Headaches" />
                             <Checkbox label="Dizziness" />
                             <Checkbox label="Fainting" />
@@ -294,7 +464,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">SKIN</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleSkinCheck}>
                             <Checkbox label="Redness" />
                             <Checkbox label="Rash" />
                             <Checkbox label="Nodules/Bumps" />
@@ -306,7 +476,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">BLOOD</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleBloodCheck}>
                             <Checkbox label="Anemia" />
                             <Checkbox label="Clots" />
                         </div>
@@ -315,7 +485,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">KIDNEY/URINE/BLADDER</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleKidneyCheck}>
                             <Checkbox label="Frequent or painfull urination" />
                             <Checkbox label="Blood in urine" />
                         </div>
@@ -324,7 +494,7 @@ export default function Home(props) {
                     <div>
                         <p className="text-lg px-8 font-semibold ml-8">STOMACH AND INTENSTINES</p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleStomachCheck}>
                             <Checkbox label="Nausea" />
                             <Checkbox label="Heartbum" />
                             <Checkbox label="Stomach Pain" />
@@ -338,7 +508,7 @@ export default function Home(props) {
                             WOMEN ONLY <span className="text-sm">(if applicable)</span>
                         </p>
 
-                        <div className="ml-8">
+                        <div className="ml-8" onChange={handleWomenOnlyCheck}>
                             <Checkbox label="Abnomal Pap Smear" />
                             <Checkbox label="Irregular Periods" />
                             <Checkbox label="Bleeding between periods" />

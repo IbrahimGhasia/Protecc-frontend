@@ -1,6 +1,8 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import Navbar from "../Components/Header/Navbar"
+import toast, { Toaster } from "react-hot-toast"
+import ErrorModal from "../Components/UI/ErrorModal"
 
 export default function Home() {
     return (

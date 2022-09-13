@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const Select = React.forwardRef((props, ref) => {
     return (
@@ -7,7 +7,7 @@ const Select = React.forwardRef((props, ref) => {
                 htmlFor={props.label}
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400"
             >
-                {props.label}
+                {props.label} <span className="text-red-700">*</span>
             </label>
             <select
                 id={props.label}
@@ -20,7 +20,7 @@ const Select = React.forwardRef((props, ref) => {
                 <option value={props.opt4}>{props.opt4}</option>
             </select>
         </div>
-    );
-});
+    )
+})
 
-export default Select;
+export default Select

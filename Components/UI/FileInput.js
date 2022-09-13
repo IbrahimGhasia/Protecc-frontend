@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const FileInput = React.forwardRef((props, ref) => {
     return (
@@ -17,6 +17,6 @@ const FileInput = React.forwardRef((props, ref) => {
                 ref={ref}
             />
         </div>
-    );
-});
-export default FileInput;
+    )
+})
+export default FileInput
