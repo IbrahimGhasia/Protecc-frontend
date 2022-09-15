@@ -10,7 +10,7 @@ export default function Home() {
                     Protecc
                 </h1>
 
-                <div className="px-20">
+                <div className="">
                     <p className="md:text-2xl px-20 mt-7 text-center text-black">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis ex
                         nec ipsum molestie, a lacinia arcu sollicitudin. Aenean justo lacus, euismod
