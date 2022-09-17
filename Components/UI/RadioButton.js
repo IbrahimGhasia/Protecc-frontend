@@ -1,9 +1,7 @@
 const RadioButton = (props) => {
     return (
         <div>
-            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">
-                {props.title}
-            </h3>
+            <h3 class="mb-4 font-semibold text-gray-900 dark:text-white">{props.title}</h3>
             <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
                     <div class="flex items-center pl-3">
@@ -41,6 +39,6 @@ const RadioButton = (props) => {
                 </li>
             </ul>
         </div>
-    );
-};
-export default RadioButton;
+    )
+}
+export default RadioButton

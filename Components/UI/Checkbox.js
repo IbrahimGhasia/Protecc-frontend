@@ -14,6 +14,6 @@ const Checkbox = (props) => {
                 {props.label}
             </label>
         </div>
-    );
-};
-export default Checkbox;
+    )
+}
+export default Checkbox
