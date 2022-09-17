@@ -4,6 +4,7 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit"
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi"
 import { alchemyProvider } from "wagmi/providers/alchemy"
 import { publicProvider } from "wagmi/providers/public"
+import { NotificationProvider } from "@web3uikit/core"
 import React from "react"
 import Head from "next/head"
 
@@ -31,7 +32,9 @@ function MyApp({ Component, pageProps }) {
             </Head>
             <WagmiConfig client={wagmiClient}>
                 <RainbowKitProvider chains={chains}>
-                    <Component {...pageProps} />
+                    <NotificationProvider>
+                        <Component {...pageProps} />
+                    </NotificationProvider>
                 </RainbowKitProvider>
             </WagmiConfig>
         </div>

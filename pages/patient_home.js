@@ -4,37 +4,19 @@ import Navbar from "../Components/Header/Navbar"
 import toast, { Toaster } from "react-hot-toast"
 import { useAccount } from "wagmi"
 import { useEffect, useState } from "react"
+import { useNotification } from "@web3uikit/core"
 
 export default function Home() {
-    useEffect(() => {
-        toast(
-            "Wallet Connected",
-            {
-                duration: 4000,
-                position: "bottom-right",
+    const dispatch = useNotification()
 
-                // Styling
-                style: {},
-                className: "",
+    if (useAccount().isConnected) {
+        dispatch({
+            type: "success",
+            title: "Wallet Connected",
+            position: "bottomL",
+        })
+    }
 
-                // Custom Icon
-                icon: "👏",
-
-                // Change colors of success/error/loading icon
-                iconTheme: {
-                    primary: "#000",
-                    secondary: "#fff",
-                },
-
-                // Aria
-                ariaProps: {
-                    role: "status",
-                    "aria-live": "polite",
-                },
-            },
-            []
-        )
-    })
     return (
         <div>
             <Navbar />

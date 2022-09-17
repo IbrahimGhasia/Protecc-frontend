@@ -10,7 +10,7 @@ export default function Home() {
                     Protecc
                 </h1>
 
-                <div className="">
+                <div>
                     <p className="md:text-2xl px-20 mt-7 text-center text-black">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis ex
                         nec ipsum molestie, a lacinia arcu sollicitudin. Aenean justo lacus, euismod
@@ -22,13 +22,13 @@ export default function Home() {
                 <div className="grid v-screen place-items-center mt-10">
                     <div className="grid-cols-2">
                         <Link href="/patient_home">
-                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 md:mr-8 mb-2">
                                 Sign in as Patient
                             </button>
                         </Link>
 
                         <Link href="/doctor_home">
-                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
                                 Sign in as Doctor
                             </button>
                         </Link>

@@ -7,8 +7,11 @@ import Checkbox from "../Components/UI/Checkbox"
 import toast, { Toaster } from "react-hot-toast"
 import ErrorModal from "../Components/UI/ErrorModal"
 
+import { useNotification } from "@web3uikit/core"
+import { useAccount } from "wagmi"
+
 export default function Home(props) {
-    const [error, setError] = useState(false)
+    const dispatch = useNotification()
 
     /*----------------------------- For Getting CheckBox Values UseState's ------------------------- */
     const [medHisChecked, setMedHisChecked] = useState([])
@@ -177,41 +180,79 @@ export default function Home(props) {
 
     /*----------------------------------------- Submit Button Handler ---------------------------------------*/
     const submitData = (event) => {
-        // event.preventDefault()
+        event.preventDefault()
+
+        const firstName = fnameRef.current.value.length
+        const lastName = lnameRef.current.value.length
+        const age = ageRef.current.value.length
+        const sex = sexRef.current.value.length
+        const dateOfBirth = dobRef.current.value.length
+        const occupation = occupationRef.current.value.length
+        const emergencyContact = emrgencyContactRef.current.value.length
+        const aadhaarId = aadhaarIDRef.current.value.length
+        const address = addressRef.current.value.length
+        const maratialStatus = marStatusRef.current.value.length
 
         /* ------------------------------ JSON Object of all Values ------------------------------------------*/
-        const editFormData = {
-            FirstName: fnameRef.current.value,
-            LastName: lnameRef.current.value,
-            Age: ageRef.current.value,
-            Sex: sexRef.current.value,
-            DateOfBirth: dobRef.current.value,
-            Occupation: occupationRef.current.value,
-            EmergencyContact: emrgencyContactRef.current.value,
-            AadhaardId: aadhaarIDRef.current.value,
-            MaratialStatus: marStatusRef.current.value,
-            CurrentSymptoms: currentSymptomsRef.current.value,
-            OtherConsultance: otherConsultanceRef.current.value,
-            FamilyDiseases: familyDiseaseRef.current.value,
-            SocialHistory: socialHistoryRef.current.value,
-            Alergies: alergiesRef.current.value,
-            PastMedicalHistory: medHisChecked,
-            SystemReview: {
-                General: generalChecked,
-                Throat: throatChecked,
-                Blood: bloodChecked,
-                Muscle: muscleChecked,
-                HeartAndLungs: heartAndLungsChecked,
-                Kidney: kidneyChecked,
-                Ears: earsChecked,
-                NervousSystem: nervousChecked,
-                Stomach: stomachChecked,
-                Eyes: eyesChecked,
-                Skin: skinChecked,
-                WomenOnly: womenOnlyChecked,
-            },
+        if (
+            firstName > 0 &&
+            lastName > 0 &&
+            age > 0 &&
+            sex > 0 &&
+            dateOfBirth > 0 &&
+            occupation > 0 &&
+            emergencyContact > 0 &&
+            aadhaarId > 0 &&
+            address > 0 &&
+            maratialStatus > 0
+        ) {
+            const editFormData = {
+                FirstName: fnameRef.current.value,
+                LastName: lnameRef.current.value,
+                Age: ageRef.current.value,
+                Sex: sexRef.current.value,
+                DateOfBirth: dobRef.current.value,
+                Occupation: occupationRef.current.value,
+                EmergencyContact: emrgencyContactRef.current.value,
+                AadhaardId: aadhaarIDRef.current.value,
+                Address: addressRef.current.value,
+                MaratialStatus: marStatusRef.current.value,
+                CurrentSymptoms: currentSymptomsRef.current.value,
+                OtherConsultance: otherConsultanceRef.current.value,
+                FamilyDiseases: familyDiseaseRef.current.value,
+                SocialHistory: socialHistoryRef.current.value,
+                Alergies: alergiesRef.current.value,
+                PastMedicalHistory: medHisChecked,
+                SystemReview: {
+                    General: generalChecked,
+                    Throat: throatChecked,
+                    Blood: bloodChecked,
+                    Muscle: muscleChecked,
+                    HeartAndLungs: heartAndLungsChecked,
+                    Kidney: kidneyChecked,
+                    Ears: earsChecked,
+                    NervousSystem: nervousChecked,
+                    Stomach: stomachChecked,
+                    Eyes: eyesChecked,
+                    Skin: skinChecked,
+                    WomenOnly: womenOnlyChecked,
+                },
+            }
+            console.log(editFormData)
+            dispatch({
+                type: "success",
+                title: "Data Submitted",
+                message: "Data Submitted Successfully",
+                position: "bottomL",
+            })
+        } else {
+            dispatch({
+                type: "error",
+                title: "Incomplete data field",
+                message: "Please fill all the (mandotory) * data field",
+                position: "bottomL",
+            })
         }
-        console.log(editFormData)
     }
 
     return (

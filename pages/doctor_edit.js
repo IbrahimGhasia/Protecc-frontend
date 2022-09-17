@@ -6,6 +6,7 @@ import TextArea from "../Components/UI/TextArea"
 import dynamic from "next/dynamic"
 import { useRef } from "react"
 import { WidgetProps } from "@worldcoin/id"
+import { useNotification } from "@web3uikit/core"
 
 const WorldIDWidget = dynamic(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), {
     ssr: false,
@@ -26,6 +27,8 @@ const widgetProps = {
 }
 
 export default function Home() {
+    const dispatch = useNotification()
+
     const fullNameRef = useRef()
     const mobileNoRef = useRef()
     const specializationRef = useRef()
@@ -43,28 +46,59 @@ export default function Home() {
     const medRegistrationProofRef = useRef()
 
     const submitData = (event) => {
-        // event.preventDefault()
+        event.preventDefault()
         // console.log(medRegistrationProofRef.current.files[1].name)
 
-        /* ------------------------------ JSON Object of all Values ------------------------------------------*/
-        const doctorEditFormData = {
-            FullName: fullNameRef.current.value,
-            MobileNo: mobileNoRef.current.value,
-            Specialization: specializationRef.current.value,
-            Country: countryRef.current.value,
-            State: stateRef.current.value,
-            City: cityRef.current.value,
-            Gender: genderRef.current.value,
-            MedicalRegistrationNumber: medRegistrationRef.current.value,
-            RegistrationYear: registrationYearRef.current.value,
-            RegistrationCouncil: registrationCouncilRef.current.value,
-            EducationalDegree: eduDegreeRef.current.value,
-            CollegeUniversity: collegeRef.current.value,
-            YearOfCompletetion: yearOfCompletionRef.current.value,
-            Experience: experienceRef.current.value,
-        }
+        const fullName = fullNameRef.current.value.length
+        const mobileNo = mobileNoRef.current.value.length
+        const specialisation = specializationRef.current.value.length
+        const country = countryRef.current.value.length
+        const state = stateRef.current.value.length
+        const city = cityRef.current.value.length
+        const gender = genderRef.current.value.length
 
-        console.log(doctorEditFormData)
+        /* ------------------------------ JSON Object of all Values ------------------------------------------*/
+        if (
+            fullName > 0 &&
+            mobileNo > 0 &&
+            specialisation > 0 &&
+            country > 0 &&
+            state > 0 &&
+            city > 0 &&
+            gender > 0
+        ) {
+            const doctorEditFormData = {
+                FullName: fullNameRef.current.value,
+                MobileNo: mobileNoRef.current.value,
+                Specialization: specializationRef.current.value,
+                Country: countryRef.current.value,
+                State: stateRef.current.value,
+                City: cityRef.current.value,
+                Gender: genderRef.current.value,
+                MedicalRegistrationNumber: medRegistrationRef.current.value,
+                RegistrationYear: registrationYearRef.current.value,
+                RegistrationCouncil: registrationCouncilRef.current.value,
+                EducationalDegree: eduDegreeRef.current.value,
+                CollegeUniversity: collegeRef.current.value,
+                YearOfCompletetion: yearOfCompletionRef.current.value,
+                Experience: experienceRef.current.value,
+            }
+            console.log(doctorEditFormData)
+
+            dispatch({
+                type: "success",
+                title: "Data Submitted",
+                message: "Data Submitted Successfully",
+                position: "bottomL",
+            })
+        } else {
+            dispatch({
+                type: "error",
+                title: "Incomplete data field",
+                message: "Please fill all the (mandotory) * data field",
+                position: "bottomL",
+            })
+        }
     }
 
     return (
