@@ -7,16 +7,6 @@ import { useEffect, useState } from "react"
 import { useNotification } from "@web3uikit/core"
 
 export default function Home() {
-    const dispatch = useNotification()
-
-    if (useAccount().isConnected) {
-        dispatch({
-            type: "success",
-            title: "Wallet Connected",
-            position: "bottomL",
-        })
-    }
-
     return (
         <div>
             <Navbar />
