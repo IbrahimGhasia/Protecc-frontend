@@ -8,7 +8,7 @@ import { useNotification } from "@web3uikit/core"
 
 export default function Home() {
     return (
-        <div>
+        <div className="dark:bg-gray-800">
             <Navbar />
             <div className="grid v-screen place-items-center mt-5">
                 <ConnectButton />

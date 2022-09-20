@@ -103,13 +103,13 @@ export default function Home() {
     }
 
     return (
-        <div>
+        <div className="dark:bg-gray-800">
             <Navbar_Doc />
             {useAccount().isConnected ? (
                 <div>
                     <div>
                         <h3 className="text-xl px-8 font-bold">Personal Information</h3>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
                     </div>
                     <form>
                         <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
@@ -170,7 +170,7 @@ export default function Home() {
                         </div>
 
                         <h3 className="text-xl px-8 font-bold">Profile Verification</h3>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
 
                         <div className="grid gap-6 mb-6 md:grid-cols-3 px-8">
                             <Input
@@ -201,7 +201,7 @@ export default function Home() {
                         </div>
 
                         <h3 className="text-xl px-8 font-bold">Educational Qualification</h3>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
 
                         <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
                             <TextArea
@@ -241,13 +241,15 @@ export default function Home() {
                             <div className="text-center">
                                 <WorldIDWidget {...widgetProps} />
 
-                                <button
-                                    type="submit"
-                                    onClick={submitData}
-                                    className="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                >
-                                    Submit
-                                </button>
+                                <div className="text-center mt-5">
+                                    <button
+                                        type="submit"
+                                        onClick={submitData}
+                                        className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    >
+                                        Submit
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </form>

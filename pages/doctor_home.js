@@ -36,7 +36,7 @@ export default function Home() {
         )
     })
     return (
-        <div>
+        <div className="dark:bg-gray-800">
             <Navbar_Doc />
             <div className="grid v-screen place-items-center mt-5">
                 <ConnectButton />

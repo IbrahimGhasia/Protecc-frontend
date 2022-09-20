@@ -256,14 +256,14 @@ export default function Home(props) {
     }
 
     return (
-        <div>
+        <div className="dark:bg-gray-800">
             <Navbar />
 
             {useAccount().isConnected ? (
                 <div>
                     <div>
                         <h3 className="text-xl px-8 font-bold">Personal Information</h3>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
                     </div>
                     <form>
                         <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
@@ -355,7 +355,7 @@ export default function Home(props) {
 
                         <div>
                             <h3 className="text-xl px-8 font-bold">Medical Information</h3>
-                            <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                            <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
                         </div>
 
                         <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
@@ -373,7 +373,7 @@ export default function Home(props) {
 
                         <div>
                             <h3 className="text-xl px-8 font-bold">Past Medical History</h3>
-                            <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                            <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
                         </div>
 
                         <p className="text-lg px-8">Do you now or have you ever had :</p>
@@ -415,7 +415,7 @@ export default function Home(props) {
 
                         <div>
                             <h3 className="text-xl px-8 font-bold">System Review</h3>
-                            <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                            <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
                         </div>
 
                         <p className="text-lg px-8 mb-4">
@@ -566,7 +566,7 @@ export default function Home(props) {
                             </div>
                         </div>
 
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
 
                         <div className="grid gap-6 mb-6 md:grid-cols-3 px-8 mt-5">
                             <Input
