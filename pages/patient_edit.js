@@ -6,6 +6,8 @@ import { useEffect, useRef, useState } from "react"
 import Checkbox from "../Components/UI/Checkbox"
 import toast, { Toaster } from "react-hot-toast"
 import ErrorModal from "../Components/UI/ErrorModal"
+import lit from "../lib/lit"
+import tableland from "../lib/tableland"
 
 import { useNotification } from "@web3uikit/core"
 import { useAccount } from "wagmi"
@@ -14,6 +16,7 @@ export default function Home(props) {
     const [walletConnected, setWalletConnected] = useState()
 
     const dispatch = useNotification()
+
     const { isConnected, address } = useAccount()
 
     const [display, setDisplay] = useState()
@@ -199,7 +202,7 @@ export default function Home(props) {
     const alergiesRef = useRef()
 
     /*----------------------------------------- Submit Button Handler ---------------------------------------*/
-    const submitData = (event) => {
+    const submitData = async (event) => {
         event.preventDefault()
 
         const firstName = fnameRef.current.value.length
@@ -259,10 +262,24 @@ export default function Home(props) {
                 },
             }
             console.log(editFormData)
+            // Encrypting the data
+            const encryptedEHR = await lit.encryptObject(editFormData, account)
             dispatch({
                 type: "success",
-                title: "Data Submitted",
-                message: "Data Submitted Successfully",
+                title: "Encrypted data with Lit",
+                message: "Succesfully encrypted your data!",
+                position: "bottomL",
+            })
+
+            const tableName = await tableland.createTable()
+
+            await tableland.writeToTable(tableName, encryptedEHR)
+            console.log("Table created and written to")
+
+            dispatch({
+                type: "success",
+                title: "TableLand write done",
+                message: "Data securely saved to Polygon!",
                 position: "bottomL",
             })
         } else {
