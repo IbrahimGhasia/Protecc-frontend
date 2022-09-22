@@ -32,8 +32,7 @@ export default function Home() {
         setModalOpen(false)
     }
 
-    const doctorAcces = [2, 4, 1]
-
+    
     return (
         <div>
             <Navbar />

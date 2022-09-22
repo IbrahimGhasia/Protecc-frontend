@@ -191,16 +191,7 @@ export default function Home() {
                         {doctor && doctor.map((doc) => <DoctorCard doctor={doc} key={doc.id} />)}
                     </div>
 
-                    <div className="relative h-28 aspect-square">
-                        <img
-                            className="mb-3"
-                            src="/yellowchart.svg"
-                            alt="Doctor"
-                        />
-                        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                            Health
-                        </p>
-                    </div>
+                    
                 </div>
             </div>
         </div>
