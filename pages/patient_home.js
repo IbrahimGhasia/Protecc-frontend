@@ -5,8 +5,36 @@ import toast, { Toaster } from "react-hot-toast"
 import { useAccount } from "wagmi"
 import { useEffect, useState } from "react"
 import { useNotification } from "@web3uikit/core"
+import lit from "../lib/lit";
+import tableland from "../lib/tableland";
 
 export default function Home() {
+    const account = useAccount().address;
+
+    useEffect(() => {
+        fetchEHR();
+    }, []);
+
+    const [patientDetails, setPatientDetails] = useState({});
+
+    async function fetchEHR() {
+        const tables = await tableland.checkExistingTable();
+        if (tables.length === 0) {
+            console.log("Need to register!");
+          }
+          else {
+            const decryptedObject = await tableland.readFromTable(tables[0].name).then((res) => lit.decryptObject(res, account));
+            setPatientDetails(JSON.parse(decryptedObject["PatientDetails"]));
+            console.log(JSON.parse(decryptedObject["PatientDetails"]));
+          }
+    }
+
+    const ehrDetails = Object.keys(patientDetails).map(k => (
+        <li
+         key={k}
+        >{k} : {patientDetails[k]}</li>
+      ));
+
     return (
         <div className="dark:bg-gray-800">
             <Navbar />
@@ -18,18 +46,12 @@ export default function Home() {
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
                     <div>
                         <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
-                            Ibrahim Ghasia{" "}
+                            {patientDetails.FirstName}{" "}{patientDetails.LastName}
                         </h5>
                         <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
 
                         <ul className="text-md md:text-2xl">
-                            <li>Age : 20</li>
-                            <li>Sex: Male</li>
-                            <li>Date of Birth: 16/04/2002</li>
-                            <li>Occupation: Student</li>
-                            <li>Emergency Contact: Mom - XX23902210</li>
-                            <li>Aadhar ID: ---- ---- ----</li>
-                            <li>Address: Al-Haider Manzil, Khatriwad, Surat</li>
+                            {ehrDetails}
                         </ul>
 
                         <Link href="/patient_edit">

@@ -251,9 +251,6 @@ export default function Home(props) {
                 position: "bottomL",
             })
 
-            const tables = await tableland.checkExistingTable();
-            console.log(tables);
-
             const tableName = await tableland.createTable();
 
             await tableland.writeToTable(tableName, encryptedEHR);
