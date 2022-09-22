@@ -46,18 +46,18 @@ export default function Home() {
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
                     <div>
                         <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
-                            Ibrahim Ghasia{" "}
+                            Dave Jay{" "}
                         </h5>
                         <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
 
                         <ul className="text-md md:text-2xl">
-                            <li>Age : 20</li>
+                            <li>Age : 19</li>
                             <li>Sex: Male</li>
-                            <li>Date of Birth: 16/04/2002</li>
+                            <li>Date of Birth: 25/12/2003</li>
                             <li>Occupation: Student</li>
                             <li>Emergency Contact: Mom - XX23902210</li>
                             <li>Aadhar ID: ---- ---- ----</li>
-                            <li>Address: Al-Haider Manzil, Khatriwad, Surat</li>
+                            <li>Address: Karelibaug, Vadodara</li>
                         </ul>
 
                         <Link href="/patient_edit">

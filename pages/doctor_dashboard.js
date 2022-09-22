@@ -1,9 +1,8 @@
 import { useState } from "react"
-import Navbar from "../Components/Header/Navbar"
+import Navbar_Doc from "../Components/Header/Navbar_Doc"
 import Card from "../Components/Cards/Card"
 import doctor from "./../data/doctors"
 import DoctorCard from "../Components/Doctor Card Profile"
-import Link from "next/link"
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false)
@@ -36,14 +35,11 @@ export default function Home() {
 
     return (
         <div>
-            <Navbar />
+            <Navbar_Doc />
             <header className="text-gray-600 bg-black/10 body-font">
                 <div className="container mx-auto flex flex-wrap py-5 flex-row md:flex-row width-100 justify-between">
                     <nav className="flex flex-wrap items-center text-base float-left">
-                        <Link href="/EHR">
-                            <a className="mr-5 hover:text-gray-900 ">My EHR</a>
-                        </Link>
-
+                        <a className="mr-5 hover:text-gray-900 ">My EHR</a>
                         <a className="mr-5 hover:text-gray-900 ">Consultations</a>
                         <a className="mr-5 hover:text-gray-900 ">Medication</a>
                         <a className="mr-5 hover:text-gray-900 ">Health Reports</a>
@@ -193,6 +189,17 @@ export default function Home() {
                             </p>
                         )}
                         {doctor && doctor.map((doc) => <DoctorCard doctor={doc} key={doc.id} />)}
+                    </div>
+
+                    <div className="relative h-28 aspect-square">
+                        <img
+                            className="mb-3"
+                            src="/yellowchart.svg"
+                            alt="Doctor"
+                        />
+                        <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                            Health
+                        </p>
                     </div>
                 </div>
             </div>
