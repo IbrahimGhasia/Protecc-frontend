@@ -263,7 +263,7 @@ export default function Home(props) {
             }
             console.log(editFormData)
             // Encrypting the data
-            const encryptedEHR = await lit.encryptObject(editFormData, account)
+            const encryptedEHR = await lit.encryptObject(editFormData, address)
             dispatch({
                 type: "success",
                 title: "Encrypted data with Lit",

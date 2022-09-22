@@ -65,6 +65,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchEHR()
+        console.log("Hello")
     }, [])
 
     const [patientDetails, setPatientDetails] = useState({})
@@ -119,11 +120,11 @@ export default function Home() {
             ) : (
                 <div className="grid v-screen place-items-center">
                     <div
-                        class="p-4 mb-4 mt-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                        className="p-4 mb-4 mt-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                         role="alert"
                     >
-                        <span class="font-medium">Wallet Not Connected!</span> Please Connect your
-                        wallet
+                        <span className="font-medium">Wallet Not Connected!</span> Please Connect
+                        your wallet
                     </div>
                 </div>
             )}
