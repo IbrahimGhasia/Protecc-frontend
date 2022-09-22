@@ -1,48 +1,68 @@
 import Navbar_Doc from "../Components/Header/Navbar_Doc"
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
-import { useAccount } from "wagmi"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import toast, { Toaster } from "react-hot-toast"
+import { signIn, useSession } from "next-auth/react"
+import { useAccount, useSignMessage, useNetwork } from "wagmi"
+import { useRouter } from "next/router"
+import axios from "axios"
 
 export default function Home() {
+    const [walletConnected, setWalletConnected] = useState()
+
+    const { isConnected, address } = useAccount()
+    const { chain } = useNetwork()
+    const { status } = useSession()
+    const { signMessageAsync } = useSignMessage()
+    const { push } = useRouter()
+
     useEffect(() => {
-        toast(
-            "Wallet Connected",
-            {
-                duration: 4000,
-                position: "bottom-right",
+        const handleAuth = async () => {
+            const userData = { address, chain: chain.id, network: "evm" }
 
-                // Styling
-                style: {},
-                className: "",
-
-                // Custom Icon
-                icon: "👏",
-
-                // Change colors of success/error/loading icon
-                iconTheme: {
-                    primary: "#000",
-                    secondary: "#fff",
+            const { data } = await axios.post("/api/auth/request-message", userData, {
+                headers: {
+                    "content-type": "application/json",
                 },
+            })
 
-                // Aria
-                ariaProps: {
-                    role: "status",
-                    "aria-live": "polite",
-                },
-            },
-            []
-        )
-    })
+            const message = data.message
+
+            const signature = await signMessageAsync({ message })
+            console.log(signature)
+
+            // redirect user after success authentication to '/user' page
+            const { url } = await signIn("credentials", {
+                message,
+                signature,
+                redirect: false,
+                // callbackUrl: "/user",
+            })
+            /**
+             * instead of using signIn(..., redirect: "/user")
+             * we get the url from callback and push it to the router to avoid page refreshing
+             */
+            push(url)
+        }
+        if (status === "unauthenticated" && isConnected) {
+            handleAuth()
+        }
+        if (isConnected) {
+            setWalletConnected(true)
+        } else {
+            setWalletConnected(false)
+        }
+    }, [status, isConnected])
+
     return (
-        <div className="dark:bg-gray-800">
+        <div>
             <Navbar_Doc />
             <div className="grid v-screen place-items-center mt-5">
                 <ConnectButton />
             </div>
 
-            {useAccount().isConnected ? (
+            {walletConnected ? (
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
                     <div>
                         <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
@@ -65,7 +85,6 @@ export default function Home() {
                             </div>
                         </Link>
                     </div>
-                    <Toaster />
                 </div>
             ) : (
                 <div className="grid v-screen place-items-center">

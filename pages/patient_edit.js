@@ -11,7 +11,27 @@ import { useNotification } from "@web3uikit/core"
 import { useAccount } from "wagmi"
 
 export default function Home(props) {
+    const [walletConnected, setWalletConnected] = useState()
+
     const dispatch = useNotification()
+    const { isConnected, address } = useAccount()
+
+    const [display, setDisplay] = useState()
+    console.log(useAccount().address)
+
+    useEffect(() => {
+        if (address) {
+            setDisplay(true)
+        } else {
+            setDisplay(false)
+        }
+
+        if (isConnected) {
+            setWalletConnected(true)
+        } else {
+            setWalletConnected(false)
+        }
+    }, [isConnected])
 
     /*----------------------------- For Getting CheckBox Values UseState's ------------------------- */
     const [medHisChecked, setMedHisChecked] = useState([])
@@ -256,10 +276,9 @@ export default function Home(props) {
     }
 
     return (
-        <div className="dark:bg-gray-800">
+        <div>
             <Navbar />
-
-            {useAccount().isConnected ? (
+            {walletConnected ? (
                 <div>
                     <div>
                         <h3 className="text-xl px-8 font-bold">Personal Information</h3>
@@ -566,31 +585,66 @@ export default function Home(props) {
                             </div>
                         </div>
 
-                        <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
+                        {display ? (
+                            <div>
+                                <div>
+                                    <h3 className="text-xl px-8 font-bold mt-8">
+                                        Doctor Consultation Notes
+                                    </h3>
+                                    <hr className="my-2 h-px bg-gray-700 border-1 dark:bg-gray-700" />
+                                </div>
 
-                        <div className="grid gap-6 mb-6 md:grid-cols-3 px-8 mt-5">
-                            <Input
-                                type="text"
-                                label="Family Diseases"
-                                placeholder="Enter your Family Diseases"
-                                ref={familyDiseaseRef}
-                            />
-                            <Input
-                                type="text"
-                                label="Social History (Habits, recent travels, exposure to pets)"
-                                placeholder="Enter your Social History"
-                                ref={socialHistoryRef}
-                            />
+                                <div className="grid gap-6 mb-6 md:grid-cols-2 px-8">
+                                    <TextArea
+                                        label="Chief Complaint"
+                                        placeholder="Breifly describe the complaints ..."
+                                        // ref={currentSymptomsRef}
+                                    />
+                                    <TextArea
+                                        label="History of Presenting Illness"
+                                        placeholder="Breifly describe the presenting illness"
+                                        // ref={otherConsultanceRef}
+                                    />
+                                </div>
 
-                            <Input
-                                type="text"
-                                label="Alergies"
-                                placeholder="Specify Alergies If you have any"
-                                ref={alergiesRef}
-                            />
-                        </div>
+                                <div className="grid gap-6 mb-6 md:grid-cols-3 px-8">
+                                    <TextArea
+                                        label="Family Diseases"
+                                        placeholder="Enter your Family Diseases"
+                                        ref={familyDiseaseRef}
+                                    />
+                                    <TextArea
+                                        label="Social History (Habits, recent travels, exposure to pets)"
+                                        placeholder="Enter your Social History"
+                                        ref={socialHistoryRef}
+                                    />
 
-                        <div className="text-center">
+                                    <TextArea
+                                        label="Alergies"
+                                        placeholder="Specify Alergies If you have any"
+                                        ref={alergiesRef}
+                                    />
+                                </div>
+
+                                <p className="text-lg px-8">Investigation Advised - </p>
+                                <div className="flex items-center mr-4 px-8 mt-4">
+                                    <div
+                                        className="grid gap-6 mb-6 md:grid-cols-4 px-8"
+                                        // onChange={handleMedHisCheck}
+                                    >
+                                        <Checkbox label="Blood" />
+                                        <Checkbox label="Urine" />
+                                        <Checkbox label="Sputum" />
+                                        <Checkbox label="CSF" />
+                                        <Checkbox label="X-Ray" />
+                                        <Checkbox label="CT Scan" />
+                                        <Checkbox label="MRI" />
+                                    </div>
+                                </div>
+                            </div>
+                        ) : null}
+
+                        <div className="text-center mt-5">
                             <button
                                 type="submit"
                                 onClick={submitData}

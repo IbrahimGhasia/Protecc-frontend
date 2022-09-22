@@ -2,23 +2,73 @@ import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import Navbar from "../Components/Header/Navbar"
 import toast, { Toaster } from "react-hot-toast"
-import { useAccount } from "wagmi"
 import { useEffect, useState } from "react"
-import { useNotification } from "@web3uikit/core"
-
+import { signIn, useSession } from "next-auth/react"
+import { useAccount, useSignMessage, useNetwork } from "wagmi"
+import { useRouter } from "next/router"
+import axios from "axios"
+import User from "./User"
 export default function Home() {
+    const [walletConnected, setWalletConnected] = useState()
+
+    const { isConnected, address } = useAccount()
+    const { chain } = useNetwork()
+    const { status } = useSession()
+    const { signMessageAsync } = useSignMessage()
+    const { push } = useRouter()
+
+    useEffect(() => {
+        const handleAuth = async () => {
+            const userData = { address, chain: chain.id, network: "evm" }
+
+            const { data } = await axios.post("/api/auth/request-message", userData, {
+                headers: {
+                    "content-type": "application/json",
+                },
+            })
+
+            const message = data.message
+
+            const signature = await signMessageAsync({ message })
+            console.log(signature)
+
+            // redirect user after success authentication to '/user' page
+            const { url } = await signIn("credentials", {
+                message,
+                signature,
+                redirect: false,
+                // callbackUrl: "/user",
+            })
+            /**
+             * instead of using signIn(..., redirect: "/user")
+             * we get the url from callback and push it to the router to avoid page refreshing
+             */
+            push(url)
+        }
+        if (status === "unauthenticated" && isConnected) {
+            handleAuth()
+        }
+
+        if (isConnected) {
+            setWalletConnected(true)
+        } else {
+            setWalletConnected(false)
+        }
+    }, [status, isConnected])
+
     return (
-        <div className="dark:bg-gray-800">
+        <div>
             <Navbar />
             <div className="grid v-screen place-items-center mt-5">
                 <ConnectButton />
+                {/* <User /> */}
             </div>
 
-            {useAccount().isConnected ? (
+            {walletConnected ? (
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
                     <div>
                         <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
-                            Ibrahim Ghasia{" "}
+                            Ibrahim Ghasia
                         </h5>
                         <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
 

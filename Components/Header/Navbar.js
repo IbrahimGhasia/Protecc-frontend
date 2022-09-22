@@ -104,36 +104,14 @@ const Navbar_Pat = () => {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/">Home</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/">Home</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/patient_home">Profile</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/patient_home">Profile</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/patient_edit">Edit</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/patient_edit">Edit</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/patient_dashboard">Dashboard</Link>
-                    </Navbar.Link>
-                </li>
-
-                {/* <Navbar.Link href="/navbars">Contact</Navbar.Link> */}
+                <Navbar.Link href="/patient_dashboard">Dashboard</Navbar.Link>
             </Navbar.Collapse>
-
-            <Flowbite>
-                <DarkThemeToggle />
-            </Flowbite>
         </Navbar>
     )
 }

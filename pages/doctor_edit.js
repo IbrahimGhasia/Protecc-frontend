@@ -4,7 +4,7 @@ import Input from "../Components/UI/Input"
 import Select from "../Components/UI/Select"
 import TextArea from "../Components/UI/TextArea"
 import dynamic from "next/dynamic"
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { WidgetProps } from "@worldcoin/id"
 import { useNotification } from "@web3uikit/core"
 import { useAccount } from "wagmi"
@@ -29,6 +29,8 @@ const widgetProps = {
 
 export default function Home() {
     const dispatch = useNotification()
+    const [walletConnected, setWalletConnected] = useState()
+    const { isConnected } = useAccount()
 
     const fullNameRef = useRef()
     const mobileNoRef = useRef()
@@ -45,6 +47,14 @@ export default function Home() {
     const yearOfCompletionRef = useRef()
     const experienceRef = useRef()
     const medRegistrationProofRef = useRef()
+
+    useEffect(() => {
+        if (isConnected) {
+            setWalletConnected(true)
+        } else {
+            setWalletConnected(false)
+        }
+    }, [isConnected])
 
     const submitData = (event) => {
         event.preventDefault()
@@ -103,9 +113,9 @@ export default function Home() {
     }
 
     return (
-        <div className="dark:bg-gray-800">
+        <div>
             <Navbar_Doc />
-            {useAccount().isConnected ? (
+            {walletConnected ? (
                 <div>
                     <div>
                         <h3 className="text-xl px-8 font-bold">Personal Information</h3>

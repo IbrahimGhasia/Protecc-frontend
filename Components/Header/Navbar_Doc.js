@@ -96,35 +96,16 @@ const Navbar_Doc = () => {
             </Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse>
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/">Home</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/">Home</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/doctor_home">Profile</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/doctor_home">Profile</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="/doctor_edit">Edit</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/doctor_edit">Edit</Navbar.Link>
 
-                <li className="text-lg">
-                    <Navbar.Link>
-                        <Link href="#">Dashboard</Link>
-                    </Navbar.Link>
-                </li>
+                <Navbar.Link href="/doctor_dashboard">Dashboard</Navbar.Link>
 
                 {/* <Navbar.Link href="/navbars">Contact</Navbar.Link> */}
             </Navbar.Collapse>
-            <Flowbite>
-                <DarkThemeToggle />
-            </Flowbite>
         </Navbar>
     )
 }
