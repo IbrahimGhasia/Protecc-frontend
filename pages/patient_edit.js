@@ -213,7 +213,7 @@ export default function Home(props) {
         const occupation = occupationRef.current.value.length
         const emergencyContact = emrgencyContactRef.current.value.length
         const aadhaarId = aadhaarIDRef.current.value.length
-        const address = addressRef.current.value.length
+        const addressInput = addressRef.current.value.length
         const maratialStatus = marStatusRef.current.value.length
 
         /* ------------------------------ JSON Object of all Values ------------------------------------------*/
@@ -226,7 +226,7 @@ export default function Home(props) {
             occupation > 0 &&
             emergencyContact > 0 &&
             aadhaarId > 0 &&
-            address > 0 &&
+            addressInput > 0 &&
             maratialStatus > 0
         ) {
             const editFormData = {
@@ -242,9 +242,9 @@ export default function Home(props) {
                 MaratialStatus: marStatusRef.current.value,
                 CurrentSymptoms: currentSymptomsRef.current.value,
                 OtherConsultance: otherConsultanceRef.current.value,
-                FamilyDiseases: familyDiseaseRef.current.value,
-                SocialHistory: socialHistoryRef.current.value,
-                Alergies: alergiesRef.current.value,
+                // FamilyDiseases: familyDiseaseRef.current.value,
+                // SocialHistory: socialHistoryRef.current.value,
+                // Alergies: alergiesRef.current.value,
                 PastMedicalHistory: medHisChecked,
                 SystemReview: {
                     General: generalChecked,
@@ -602,7 +602,7 @@ export default function Home(props) {
                             </div>
                         </div>
 
-                        {display ? (
+                        {/* {display ? (
                             <div>
                                 <div>
                                     <h3 className="text-xl px-8 font-bold mt-8">
@@ -659,7 +659,7 @@ export default function Home(props) {
                                     </div>
                                 </div>
                             </div>
-                        ) : null}
+                        ) : null} */}
 
                         <div className="text-center mt-5">
                             <button
