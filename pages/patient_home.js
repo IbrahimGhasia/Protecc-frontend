@@ -89,6 +89,8 @@ export default function Home() {
         </li>
     ))
 
+    console.log(patientDetails)
+
     return (
         <div>
             <Navbar />
@@ -104,9 +106,17 @@ export default function Home() {
                             {patientDetails.FirstName} {patientDetails.LastName}
                         </h5>
                         <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
-
                         <ul className="text-md md:text-2xl">{ehrDetails}</ul>
-
+                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                        <ul className="text-md md:text-2xl">
+                            <li>Age : 19</li>
+                            <li>Sex: Male</li>
+                            <li>Date of Birth: 25/12/2003</li>
+                            <li>Occupation: Student</li>
+                            <li>Emergency Contact: Mom - XX23902210</li>
+                            <li>Aadhar ID: ---- ---- ----</li>
+                            <li>Address: Karelibaug, Vadodara</li>
+                        </ul>
                         <Link href="/patient_edit">
                             <div className="text-center">
                                 <button className="mt-2 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2 mb-2">
