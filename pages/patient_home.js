@@ -64,15 +64,10 @@ export default function Home() {
 
     useEffect(() => {
         fetchEHR()
-        console.log("Hello")
     }, [])
 
     const [patientDetails, setPatientDetails] = useState({})
     const [dataNotAvaialable, setDataNotAvailable] = useState()
-
-    // useEffect(() => {
-    //     setDataNotAvailable(false)
-    // }, [dataNotAvaialable])
 
     async function fetchEHR() {
         const tables = await tableland.checkExistingTable()
@@ -94,8 +89,6 @@ export default function Home() {
             {k} : {patientDetails[k]}
         </li>
     ))
-
-    console.log(patientDetails)
 
     return (
         <div>
