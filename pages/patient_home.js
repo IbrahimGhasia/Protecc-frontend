@@ -3,7 +3,6 @@ import Link from "next/link"
 import Navbar from "../Components/Header/Navbar"
 import toast, { Toaster } from "react-hot-toast"
 import { useEffect, useState } from "react"
-
 import { signIn, useSession } from "next-auth/react"
 import { useAccount, useSignMessage, useNetwork } from "wagmi"
 import { useRouter } from "next/router"
@@ -69,12 +68,19 @@ export default function Home() {
     }, [])
 
     const [patientDetails, setPatientDetails] = useState({})
+    const [dataNotAvaialable, setDataNotAvailable] = useState()
+
+    // useEffect(() => {
+    //     setDataNotAvailable(false)
+    // }, [dataNotAvaialable])
 
     async function fetchEHR() {
         const tables = await tableland.checkExistingTable()
         if (tables.length === 0) {
             console.log("Need to register!")
+            setDataNotAvailable(true)
         } else {
+            setDataNotAvailable(false)
             const decryptedObject = await tableland
                 .readFromTable(tables[0].name)
                 .then((res) => lit.decryptObject(res, account))
@@ -101,31 +107,25 @@ export default function Home() {
 
             {walletConnected ? (
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
-                    <div>
-                        <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
-                            {patientDetails.FirstName} {patientDetails.LastName}
-                        </h5>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
-                        <ul className="text-md md:text-2xl">{ehrDetails}</ul>
-                        <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
-                        <ul className="text-md md:text-2xl">
-                            <li>Age : 19</li>
-                            <li>Sex: Male</li>
-                            <li>Date of Birth: 25/12/2003</li>
-                            <li>Occupation: Student</li>
-                            <li>Emergency Contact: Mom - XX23902210</li>
-                            <li>Aadhar ID: ---- ---- ----</li>
-                            <li>Address: Karelibaug, Vadodara</li>
-                        </ul>
-                        <Link href="/patient_edit">
-                            <div className="text-center">
-                                <button className="mt-2 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2 mb-2">
-                                    Edit Profile
-                                </button>
-                            </div>
-                        </Link>
-                    </div>
-                    <Toaster />
+                    {dataNotAvaialable ? (
+                        <div> Oops You have not registerd yet </div>
+                    ) : (
+                        <div>
+                            <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
+                                {patientDetails.FirstName} {patientDetails.LastName}
+                            </h5>
+                            <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
+                            <ul className="text-md md:text-2xl">{ehrDetails}</ul>
+
+                            <Link href="/patient_edit">
+                                <div className="text-center">
+                                    <button className="mt-2 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2 mb-2">
+                                        Edit Profile
+                                    </button>
+                                </div>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className="grid v-screen place-items-center">
