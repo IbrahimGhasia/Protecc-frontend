@@ -4,8 +4,6 @@ import Navbar from "../Components/Header/Navbar"
 import TextArea from "../Components/UI/TextArea"
 import { useEffect, useRef, useState } from "react"
 import Checkbox from "../Components/UI/Checkbox"
-import toast, { Toaster } from "react-hot-toast"
-import ErrorModal from "../Components/UI/ErrorModal"
 import lit from "../lib/lit"
 import tableland from "../lib/tableland"
 

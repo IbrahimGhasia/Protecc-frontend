@@ -1,11 +1,5 @@
 import React from "react"
 import Link from "next/link"
-import { Navbar } from "flowbite-react"
-import { Dropdown } from "flowbite-react"
-import { Avatar } from "flowbite-react"
-import { Flowbite } from "flowbite-react"
-import { DarkThemeToggle } from "flowbite-react"
-
 const Navbar_Doc = () => {
     const [modalOpen, setModalOpen] = React.useState(false)
     const changeModalState = () => {
@@ -31,7 +25,13 @@ const Navbar_Doc = () => {
                     </a>
                 </Link>
 
-                <button>
+                <button
+                    data-collapse-toggle="navbar-default"
+                    type="button"
+                    className="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    aria-controls="navbar-default"
+                    aria-expanded="false"
+                >
                     <span className="sr-only">Open main menu</span>
                     <svg
                         className="w-6 h-6"
@@ -97,208 +97,6 @@ const Navbar_Doc = () => {
                             </div>
                         </li>
                     </ul>
-                </div>
-
-                <div
-                    className={`${
-                        modalOpen ? "" : "hidden"
-                    } absolute top-0 left-0 z-40 w-screen h-screen bg-black/10 backdrop-blur `}
-                />
-                <div
-                    tabindex="-1"
-                    aria-hidden="true"
-                    className={`${
-                        modalOpen ? "" : "hidden"
-                    } overflow-y-auto overflow-x-hidden fixed top-0 right-0 z-50 h-screen`}
-                >
-                    <div className="px-6 lg:px-8 w-96 h-screen">
-                        <div
-                            className="w-full absolute z-10 right-0 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
-                            id="notification"
-                        >
-                            <div className="2xl:w-4/12 bg-gray-50 h-screen overflow-y-auto p-8 absolute right-0">
-                                <div className="flex items-center justify-between">
-                                    <p
-                                        tabindex="0"
-                                        className="focus:outline-none text-2xl font-semibold leading-6 text-gray-800"
-                                    >
-                                        Notifications
-                                    </p>
-                                    <button
-                                        role="button"
-                                        aria-label="close modal"
-                                        className="focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 rounded-md cursor-pointer"
-                                        onClick={() => setModalOpen(false)}
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg1.svg"
-                                            alt="icon"
-                                        />
-                                    </button>
-                                </div>
-
-                                <div className="w-full p-3 mt-8 bg-white rounded flex">
-                                    <div
-                                        tabindex="0"
-                                        aria-label="heart icon"
-                                        role="img"
-                                        className="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg2.svg"
-                                            alt="icon"
-                                        />
-                                    </div>
-                                    <div className="pl-3">
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-sm leading-none"
-                                        >
-                                            <span className="text-indigo-700">James Doe</span>{" "}
-                                            favourited an{" "}
-                                            <span className="text-indigo-700">item</span>
-                                        </p>
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
-                                        >
-                                            2 hours ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="w-full p-3 mt-4 bg-white rounded  flex flex-shrink-0">
-                                    <div
-                                        tabindex="0"
-                                        aria-label="group icon"
-                                        role="img"
-                                        className="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center"
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg3.svg"
-                                            alt="icon"
-                                        />
-                                    </div>
-                                    <div className="pl-3 w-full">
-                                        <div className="flex items-center justify-between w-full">
-                                            <p
-                                                tabindex="0"
-                                                className="focus:outline-none text-sm leading-none"
-                                            >
-                                                <span className="text-indigo-700">Sash</span> added
-                                                you to the group:{" "}
-                                                <span className="text-indigo-700">
-                                                    UX Designers
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
-                                        >
-                                            2 hours ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="w-full p-3 mt-4 bg-white rounded flex">
-                                    <div
-                                        tabindex="0"
-                                        aria-label="post icon"
-                                        role="img"
-                                        className="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg5.svg"
-                                            alt="icon"
-                                        />
-                                    </div>
-                                    <div className="pl-3">
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-sm leading-none"
-                                        >
-                                            <span className="text-indigo-700">Sarah</span> posted in
-                                            the thread:{" "}
-                                            <span className="text-indigo-700">
-                                                Update gone wrong
-                                            </span>
-                                        </p>
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
-                                        >
-                                            2 hours ago
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="w-full p-3 mt-4 bg-red-100 rounded flex items-center">
-                                    <div
-                                        tabindex="0"
-                                        aria-label="storage icon"
-                                        role="img"
-                                        className="focus:outline-none w-8 h-8 border rounded-full border-red-200 flex items-center flex-shrink-0 justify-center"
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg6.svg"
-                                            alt="icon"
-                                        />
-                                    </div>
-                                    <div className="pl-3 w-full flex items-center justify-between">
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-sm leading-none text-red-700"
-                                        >
-                                            Low on storage: 2.5/32gb remaining
-                                        </p>
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-xs leading-3 cursor-pointer underline text-right text-red-700"
-                                        >
-                                            Manage
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="w-full p-3 mt-4 bg-white rounded flex">
-                                    <div
-                                        tabindex="0"
-                                        aria-label="loading icon"
-                                        role="img"
-                                        className="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center"
-                                    >
-                                        <img
-                                            src="https://tuk-cdn.s3.amazonaws.com/can-uploader/notification_1-svg7.svg"
-                                            alt="icon"
-                                        />
-                                    </div>
-                                    <div className="pl-3">
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-sm leading-none"
-                                        >
-                                            Shipmet delayed for order
-                                            <span className="text-indigo-700"> #25551</span>
-                                        </p>
-                                        <p
-                                            tabindex="0"
-                                            className="focus:outline-none text-xs leading-3 pt-1 text-gray-500"
-                                        >
-                                            2 hours ago
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center justiyf-between">
-                                    <hr className="w-full" />
-                                    <p
-                                        tabindex="0"
-                                        className="focus:outline-none text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500"
-                                    >
-                                        Thats it for now :)
-                                    </p>
-                                    <hr className="w-full" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </nav>
