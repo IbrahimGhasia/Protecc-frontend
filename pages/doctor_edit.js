@@ -8,6 +8,8 @@ import { useRef, useState, useEffect } from "react"
 import { WidgetProps } from "@worldcoin/id"
 import { useNotification } from "@web3uikit/core"
 import { useAccount } from "wagmi"
+import lit from "../lib/lit"
+import tableland from "../lib/tableland"
 
 const WorldIDWidget = dynamic(() => import("@worldcoin/id").then((mod) => mod.WorldIDWidget), {
     ssr: false,
@@ -30,7 +32,7 @@ const widgetProps = {
 export default function Home() {
     const dispatch = useNotification()
     const [walletConnected, setWalletConnected] = useState()
-    const { isConnected } = useAccount()
+    const { isConnected, address } = useAccount()
 
     const fullNameRef = useRef()
     const mobileNoRef = useRef()
@@ -56,7 +58,7 @@ export default function Home() {
         }
     }, [isConnected])
 
-    const submitData = (event) => {
+    const submitData = async (event) => {
         event.preventDefault()
         // console.log(medRegistrationProofRef.current.files[1].name)
 
@@ -95,6 +97,26 @@ export default function Home() {
                 Experience: experienceRef.current.value,
             }
             console.log(doctorEditFormData)
+            // Encrypting the data
+            const encryptedEHR = await lit.encryptObject(doctorEditFormData, address)
+            dispatch({
+                type: "success",
+                title: "Encrypted data with Lit",
+                message: "Succesfully encrypted your data!",
+                position: "bottomL",
+            })
+
+            const tableName = await tableland.createTable()
+
+            await tableland.writeToTable(tableName, encryptedEHR)
+            console.log("Table created and written to")
+
+            dispatch({
+                type: "success",
+                title: "TableLand write done",
+                message: "Data securely saved to Polygon!",
+                position: "bottomL",
+            })
 
             dispatch({
                 type: "success",
