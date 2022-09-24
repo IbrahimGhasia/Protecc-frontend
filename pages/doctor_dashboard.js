@@ -7,7 +7,6 @@ export default function Home() {
     return (
         <div>
             <Navbar_Doc />
-
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
                     <p className="font-bold font-2xl ">Today Schedule</p>
