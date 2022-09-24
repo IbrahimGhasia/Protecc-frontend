@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Navbar from "../Components/Header/Navbar"
 import { Client } from '@xmtp/xmtp-js'
 import { useSigner, useAccount } from 'wagmi'
@@ -20,11 +20,51 @@ export default function Home() {
     const { data: signer, isError, isLoading } = useSigner();
     const { address, isConnecting, isDisconnected } = useAccount()
     const dispatch = useNotification()
+    const [client, setClient] = useState(null)
 
+    const initClient = useCallback(
+        async (wallet) => {
+          if (wallet && !client) {
+            try {
+              setClient(await Client.create(wallet))
+            } catch (e) {
+              console.error(e)
+              setClient(null)
+            }
+          }
+        },
+        [client]
+      )
 
-    useEffect(() => {
-        console.log(signer, address)
-        }, []);
+      const disconnect = () => {
+        setClient(null)
+      }
+
+      useEffect(() => {
+        signer ? initClient(signer) : disconnect()
+      }, [signer])
+
+      useEffect(() => {
+        if (!client) return
+    
+        const listConversations = async () => {
+          console.log('Waiting for new conversations!')
+          const stream = await client.conversations.stream()
+          var newConvo;
+          for await (const conversation of stream) {
+            console.log(`New conversation started with ${conversation.peerAddress}`)
+            // Say hello to your new friend
+            newConvo = conversation;
+            // await conversation.send('Hi there!')
+            // Break from the loop to stop listening
+            break
+        }
+        for await (const message of await newConvo.streamMessages()) {
+            console.log(`[${message.senderAddress}]: ${message.content}`)
+            }
+        }
+        listConversations()
+      }, [client])
     
         async function sendMessage() {
             const provider = new ethers.providers.Web3Provider(window.ethereum);
