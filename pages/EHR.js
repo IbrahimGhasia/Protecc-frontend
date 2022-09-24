@@ -1,51 +1,13 @@
-import { useRef, useEffect, useState } from "react"
-import Navbar from "../Components/Header/Navbar"
-import { Client } from '@xmtp/xmtp-js'
-import { useSigner, useAccount } from 'wagmi'
-import { useNotification } from "@web3uikit/core"
-import tableland from "../lib/tableland"
-import Input from "../Components/UI/Input"
-
-import Card from "../Components/Cards/Card"
-import doctor from "./../data/doctors"
-import DoctorCard from "../Components/Doctor Card Profile"
+import React from "react"
 import Link from "next/link"
+import { useState } from "react"
+import Navbar from "../Components/Header/Navbar"
 
-export default function Home() {
+const EHR = () => {
     const [modalOpen, setModalOpen] = useState(false)
     const changeModalState = () => {
         setModalOpen((prev) => !prev)
     }
-
-    const { data: signer, isError, isLoading } = useSigner();
-    const { address, isConnecting, isDisconnected } = useAccount()
-    const dispatch = useNotification()
-
-
-    useEffect(() => {
-        console.log(signer, address)
-        }, []);
-    
-        async function sendMessage() {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            // get the end user
-            const signer = provider.getSigner();
-            const xmtp = await Client.create(signer)
-        // Start a conversation with XMTP
-        const conversation = await xmtp.conversations.newConversation(
-            address
-        )
-        // Load all messages in the conversation
-        const messages = await conversation.messages()
-        // Send a message
-        await conversation.send('gm')
-        // Listen for new messages in the conversation
-        for await (const message of await conversation.streamMessages()) {
-        console.log(`[${message.senderAddress}]: ${message.content}`)
-        }
-
-        }
-
     const [appointment, setAppointment] = useState([])
 
     const [formValue, setFormValue] = useState({
@@ -58,32 +20,15 @@ export default function Home() {
         setFormValue((p) => ({ ...p, [e.target.name]: e.target.value }))
     }
 
-    const submitAppointment = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
-
-        console.log(formValue);
-        const tableName = await tableland.createAppointmentTable()
-        console.log(tableName);
-
-        await tableland.writeUnencryptedToTable(tableName, formValue)
-        console.log("Table created and written to")
-
-        dispatch({
-            type: "success",
-            title: "TableLand write done",
-            message: "Appointment submitted succesfully!",
-            position: "bottomL",
-        })
-
         setAppointment((p) => [
             ...p,
             { ...formValue, id: new Date().toISOString(), doctor: "Dr. Metha" },
         ])
-
         setModalOpen(false)
     }
 
-    
     return (
         <div>
             <Navbar />
@@ -113,7 +58,6 @@ export default function Home() {
                     </nav>
                 </div>
             </header>
-
             <div
                 className={`${
                     modalOpen ? "" : "hidden"
@@ -152,7 +96,7 @@ export default function Home() {
                             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                 Book an Appointment
                             </h3>
-                            <form className="space-y-6" action="#" onSubmit={submitAppointment}>
+                            <form className="space-y-6" action="#" onSubmit={handleSubmit}>
                                 <div>
                                     <label
                                         for="email"
@@ -203,13 +147,18 @@ export default function Home() {
                                         <option value="GP" selected>
                                             General Physician
                                         </option>
-                                        <option value="GP">Peadetrician</option>
+                                        <option value="GP">General Physician</option>
+                                        <option value="GP">General Physician</option>
+                                        <option value="GP">General Physician</option>
+                                        <option value="GP">General Physician</option>
+                                        <option value="GP">General Physician</option>
                                     </select>
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"                                >
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                >
                                     Confirm Appointment
                                 </button>
                             </form>
@@ -217,30 +166,56 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-
-            <div className="flex pt-2 container mx-auto">
-                <div className="flex-auto max-w-auto mx-2">
-                    <p className="font-bold font-xl"> Upcoming Appointment </p>
-
-                    {appointment.length === 0 && (
-                        <p className="text-green-500 font-bold text-lg">No Upcoming Appointment</p>
-                    )}
-                    {appointment &&
-                        appointment.map((appoi) => <Card appointment={appoi} key={appoi.id} />)}
+            <div className="container mx-auto flex py-10 gap-4">
+                <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700  pt-5">
+                    <div className="flex flex-col items-center pt-0">
+                        <img
+                            className="mb-3  h-32  object-cover rounded-full shadow-lg"
+                            src="/patient.jpg"
+                            alt="Doctor"
+                        />
+                        <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
+                            Dave Jay
+                        </h5>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Details:-</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">Age :- 19</span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                            Blood Group :- O+
+                        </span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                            Height :- 1.70m
+                        </span>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
+                            Weight :- 65kg
+                        </span>
+                        <div className="flex mt-4 space-x-3 md:mt-6"></div>
+                    </div>
                 </div>
-                <div className="flex-auto max-w-sm right-0 mx-2">
-                    <div className="flex flex-col max-w-auto mx-2 py-2 gap-4">
-                        <p className="font-bold font-xl">Who can Access your data? </p>
-
-                        {doctor.length === 0 && (
-                            <p className="text-green-500 font-bold text-lg">
-                                You are free from every doctor keep eating apples
+                <div className="flex gap-4 flex-1  p-4 bg-white rounded-lg border border-gray-200 shadow-md">
+                    <div className="flex justify-between flex-col">
+                        <div className="relative h-32 aspect-square mx-auto">
+                            <img className="mb-3" src="/yellowchart.svg" alt="Doctor" />
+                            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                General
                             </p>
-                        )}
-                        {doctor && doctor.map((doc) => <DoctorCard doctor={doc} key={doc.id} />)}
+                        </div>
+                        <div className="relative h-32 aspect-square mx-auto">
+                            <img className="mb-3" src="/bluechart.svg" alt="Doctor" />
+                            <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                Hydration
+                            </p>
+                        </div>
+                    </div>
+                    <div className="relative my-auto h-full">
+                        <img className="mb-3" src="/graph.svg" alt="Doctor" />
+                        <p className=" text-center">
+                            Health Graph
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     )
 }
+
+export default EHR

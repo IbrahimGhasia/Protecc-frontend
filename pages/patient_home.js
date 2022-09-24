@@ -101,6 +101,7 @@ export default function Home() {
                 <div className="ml-4 mr-4 mt-10 md:ml-20 md:mr-20 p-8 border-2 rounded-lg">
                     <div>
                         <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
+
                             {patientDetails.FirstName} {patientDetails.LastName}
                         </h5>
                         <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
