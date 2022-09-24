@@ -1,18 +1,18 @@
 import React from "react"
 
-const DoctorCard = () => {
+const DoctorCard = (doctor) => {
     return (
         <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center pb-10">
-                <img
+                {/* <img
                     className="mb-3  h-28  object-cover rounded-full shadow-lg"
                     src="/docimg.jpg"
                     alt="Doctor"
-                />
+                /> */}
                 <h5 className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
-                    Dr. Mehta
+                    {doctor.fullName}
                 </h5>
-                <span className="text-sm text-gray-500 dark:text-gray-400">General Physician</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">{doctor.Specialization}</span>
                 <div className="flex mt-4 space-x-3 md:mt-6">
                     <a
                         href="#"

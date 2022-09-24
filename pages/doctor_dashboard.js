@@ -7,6 +7,7 @@ import { PatientCard } from "../Components/Doctor Card Profile/index"
 import tableland from "../lib/tableland"
 import { useSigner, useAccount } from 'wagmi'
 import { Client } from '@xmtp/xmtp-js'
+import lit from "../lib/lit"
 
 export default function Home() {
     useEffect(() => {
@@ -36,12 +37,26 @@ export default function Home() {
     // Load all messages in the conversation
     const messages = await conversation.messages()
     // Send a message
-    await conversation.send(address)
+    const message = await fetchDoctorProfile()
+    await conversation.send(message)
+    // Add dispatch here
     // Listen for new messages in the conversation
     for await (const message of await conversation.streamMessages()) {
     console.log(`[${message.senderAddress}]: ${message.content}`)
     }
+    }
 
+    async function fetchDoctorProfile() {
+        const tables = await tableland.checkExistingTable("doctorProfileTest")
+        if (tables.length === 0) {
+            console.log("Need to register!")
+        } else {
+            const decryptedObject = await tableland
+                .readFromTable(tables[0].name)
+                .then((res) => lit.decryptObject(res, address))
+            const profile = decryptedObject["PatientDetails"];
+            return profile
+        }
     }
 
     const appointmentDetails = Object.keys(appointments).map((k) => (

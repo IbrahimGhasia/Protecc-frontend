@@ -61,6 +61,8 @@ export default function Home() {
         }
         for await (const message of await newConvo.streamMessages()) {
             console.log(`[${message.senderAddress}]: ${message.content}`)
+            addDoctor([{...JSON.parse(message.content), address: `${message.senderAddress}`}]);
+            break
             }
         }
         listConversations()
@@ -94,6 +96,8 @@ export default function Home() {
         time: "",
         consulate: "General Physician",
     })
+
+    const [doctors, addDoctor] = useState([])
 
     const handleChange = (e) => {
         setFormValue((p) => ({ ...p, [e.target.name]: e.target.value }))
@@ -274,12 +278,12 @@ export default function Home() {
                     <div className="flex flex-col max-w-auto mx-2 py-2 gap-4">
                         <p className="font-bold font-xl">Who can Access your data? </p>
 
-                        {doctor.length === 0 && (
+                        {doctors.length === 0 && (
                             <p className="text-green-500 font-bold text-lg">
                                 You are free from every doctor keep eating apples
                             </p>
                         )}
-                        {doctor && doctor.map((doc) => <DoctorCard doctor={doc} key={doc.id} />)}
+                        {doctors && doctors.map((doc) => <DoctorCard doctor={doc} key={doc.FullName} />)}
                     </div>
                 </div>
             </div>
