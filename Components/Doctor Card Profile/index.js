@@ -32,7 +32,7 @@ const DoctorCard = () => {
     )
 }
 
-export const PatientCard = ({ profileURL, name, issue,time }) => {
+export const PatientCard = ({ profileURL, name, date,time, handleClick }) => {
     return (
         <div className="w-full max-w-[200px] py-3 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center py-0">
@@ -43,14 +43,14 @@ export const PatientCard = ({ profileURL, name, issue,time }) => {
                 />
                 <h5 className="mb-0 text-lg font-medium text-gray-900 dark:text-white">{name}</h5>
                 <span className="text-xs font-bold text-gray-500 dark:text-gray-400">Time :- {time}</span>
-                <span className="text-xs font-bold text-gray-500 dark:text-gray-400">{issue}</span>
+                <span className="text-xs font-bold text-gray-500 dark:text-gray-400">Date: {date}</span>
                 <div className="flex mt-0 space-x-3 md:mt-0">
-                    <a
-                        href="#"
+                    <button
+                        onClick={handleClick}
                         className="inline-flex items-center py-1 px-2 text-xs mt-2 font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                        Start Appointment
-                    </a>
+                        Accept Appointment
+                    </button>
                 </div>
             </div>
         </div>

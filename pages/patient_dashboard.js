@@ -49,6 +49,7 @@ export default function Home() {
     const [appointment, setAppointment] = useState([])
 
     const [formValue, setFormValue] = useState({
+        address: "",
         date: "",
         time: "",
         consulate: "General Physician",
@@ -65,6 +66,7 @@ export default function Home() {
         const tableName = await tableland.createAppointmentTable()
         console.log(tableName);
 
+        formValue.address = address;
         await tableland.writeUnencryptedToTable(tableName, formValue)
         console.log("Table created and written to")
 

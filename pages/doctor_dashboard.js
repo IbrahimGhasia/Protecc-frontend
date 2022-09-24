@@ -14,6 +14,8 @@ export default function Home() {
         console.log(signer, address);
     }, [])
 
+    const [appointments, setAppointments] = useState([]);
+
     const { data: signer, isError, isLoading } = useSigner();
     const { address, isConnecting, isDisconnected } = useAccount()
 
@@ -22,6 +24,7 @@ export default function Home() {
         console.log(tables);
         const appointments = await tableland.readAppointmentsFromTable(tables[0].name);
         console.log(appointments);
+        setAppointments([appointments]);
     }
 
     async function sendMessage() {
@@ -33,7 +36,7 @@ export default function Home() {
     // Load all messages in the conversation
     const messages = await conversation.messages()
     // Send a message
-    await conversation.send('gm')
+    await conversation.send(address)
     // Listen for new messages in the conversation
     for await (const message of await conversation.streamMessages()) {
     console.log(`[${message.senderAddress}]: ${message.content}`)
@@ -41,40 +44,24 @@ export default function Home() {
 
     }
 
+    const appointmentDetails = Object.keys(appointments).map((k) => (
+        <PatientCard
+                            profileURL=""
+                            name={appointments[k].address}
+                            date={appointments[k].date}
+                            time={appointments[k].time}
+                            handleClick={sendMessage}
+                        />
+    ))
+
     return (
         <div>
             <Navbar_Doc />
-            <button onClick={sendMessage} className="mt-2 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2 mb-2">
-                                    Edit Profile
-                                </button>
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
                     <p className="font-bold font-2xl "> Today's Schedule </p>
                     <div className="flex flex-wrap gap-3 py-4">
-                        <PatientCard
-                            profileURL="/patient.jpg"
-                            name="Patient 1"
-                            issue="Viral fever"
-                            time="15min"
-                        />
-                        <PatientCard
-                            profileURL="/patient.jpg"
-                            name="Patient 2"
-                            issue="Viral fever"
-                            time="1hour15min"
-                        />
-                        <PatientCard
-                            profileURL="/patient.jpg"
-                            name="Patient 3"
-                            issue="Viral fever"
-                            time="3hours"
-                        />
-                        <PatientCard
-                            profileURL="/patient.jpg"
-                            name="Patient 4"
-                            issue="Viral fever"
-                            time="7hours"
-                        />
+                         {appointmentDetails}
                     </div>
                 </div>
                 <div className="flex-auto max-w-xs right-0 mx-2">
