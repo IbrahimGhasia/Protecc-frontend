@@ -132,13 +132,20 @@ export default function Home() {
                     <TextArea label="Treatment Given" ref={treatmentGivenRef} required={true} />
                 </div>
 
-                <div className="text-center mt-5">
+                <div className="flex justify-center text-center mt-5">
                     <button
                         type="submit"
                         onClick={submitData}
                         className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
                         Submit
+                    </button>
+                    <button
+                        type="submit"
+                        onClick={submitData}
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    >
+                        Add Prescription
                     </button>
                 </div>
             </div>
