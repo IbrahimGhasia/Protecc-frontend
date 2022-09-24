@@ -1,10 +1,5 @@
 import React from "react"
 import Link from "next/link"
-import { Navbar } from "flowbite-react"
-import { Dropdown } from "flowbite-react"
-import { Avatar } from "flowbite-react"
-import { Flowbite } from "flowbite-react"
-import { DarkThemeToggle } from "flowbite-react"
 
 const Navbar_Pat = () => {
     return (
