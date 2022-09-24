@@ -1,7 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import Navbar from "../Components/Header/Navbar"
-import toast, { Toaster } from "react-hot-toast"
 import { useEffect, useState } from "react"
 import { signIn, useSession } from "next-auth/react"
 import { useAccount, useSignMessage, useNetwork } from "wagmi"

@@ -29,7 +29,7 @@ export default function Home() {
                 </div>
             </div>
 
-                <p className="text-2xl text-center">Frequently Asked Questions :-</p>
+            <p className="text-2xl text-center">Frequently Asked Questions :-</p>
             <div className="bg-white w-1/2 mx-auto rounded-md mt-5">
                 <Accordion>
                     <Accordion.Panel>

@@ -21,6 +21,7 @@
         "connectkit": "^0.0.2",
         "dotenv": "^16.0.2",
         "ethers": "^5.7.0",
+        "jspdf": "^2.5.1",
         "moralis": "^2.5.3",
         "next": "12.3.0",
         "next-auth": "^4.10.3",
