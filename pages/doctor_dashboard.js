@@ -10,7 +10,7 @@ export default function Home() {
 
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
-                    <p className="font-bold font-2xl "> Today Schedule </p>
+                    <p className="font-bold font-2xl ">Today Schedule</p>
                     <div className="flex flex-wrap gap-10 py-4">
                         <PatientCard
                             profileURL="/patient.jpg"

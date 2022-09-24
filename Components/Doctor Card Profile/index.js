@@ -5,7 +5,7 @@ const DoctorCard = () => {
         <div className="w-full max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
             <div className="flex flex-col items-center pb-10">
                 <img
-                    className="mb-3  h-28  object-cover rounded-full shadow-lg"
+                    className="mb-3 h-28 object-cover rounded-full shadow-lg"
                     src="/docimg.jpg"
                     alt="Doctor"
                 />
