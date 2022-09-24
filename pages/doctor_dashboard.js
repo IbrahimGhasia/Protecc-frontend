@@ -5,7 +5,7 @@ import PatientCard from "../Components/Cards/PatientCard"
 
 export default function Home() {
     return (
-        <div>
+        <div className="">
             <Navbar_Doc />
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
