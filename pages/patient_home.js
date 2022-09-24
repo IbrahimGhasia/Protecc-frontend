@@ -5,7 +5,7 @@ import toast, { Toaster } from "react-hot-toast"
 import { useEffect, useState } from "react"
 
 import { signIn, useSession } from "next-auth/react"
-import { useAccount, useSignMessage, useNetwork } from "wagmi"
+import { useAccount, useSigner, useSignMessage, useNetwork } from "wagmi"
 import { useRouter } from "next/router"
 import axios from "axios"
 import User from "./User"
@@ -21,6 +21,7 @@ export default function Home() {
     const { status } = useSession()
     const { signMessageAsync } = useSignMessage()
     const { push } = useRouter()
+    const { data: signer, isError, isLoading } = useSigner();
 
     useEffect(() => {
         const handleAuth = async () => {
@@ -65,7 +66,7 @@ export default function Home() {
 
     useEffect(() => {
         fetchEHR()
-        console.log("Hello")
+        console.log(signer, address, isError, isLoading);;
     }, [])
 
     const [patientDetails, setPatientDetails] = useState({})

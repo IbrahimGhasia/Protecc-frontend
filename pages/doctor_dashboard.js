@@ -1,14 +1,52 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Navbar_Doc from "../Components/Header/Navbar_Doc"
 import Card from "../Components/Cards/Card"
 import doctor from "./../data/doctors"
 import { PatientCard } from "../Components/Doctor Card Profile/index"
+import tableland from "../lib/tableland"
+import { useSigner, useAccount } from 'wagmi'
+import { Client } from '@xmtp/xmtp-js'
 
 export default function Home() {
+    useEffect(() => {
+        populateAppointments();
+        console.log(signer, address);
+    }, [])
+
+    const { data: signer, isError, isLoading } = useSigner();
+    const { address, isConnecting, isDisconnected } = useAccount()
+
+    async function populateAppointments() {
+        const tables = await tableland.checkExistingTable("appointmentTest");
+        console.log(tables);
+        const appointments = await tableland.readAppointmentsFromTable(tables[0].name);
+        console.log(appointments);
+    }
+
+    async function sendMessage() {
+        const xmtp = await Client.create(signer)
+    // Start a conversation with XMTP
+    const conversation = await xmtp.conversations.newConversation(
+        address
+    )
+    // Load all messages in the conversation
+    const messages = await conversation.messages()
+    // Send a message
+    await conversation.send('gm')
+    // Listen for new messages in the conversation
+    for await (const message of await conversation.streamMessages()) {
+    console.log(`[${message.senderAddress}]: ${message.content}`)
+    }
+
+    }
+
     return (
         <div>
             <Navbar_Doc />
+            <button onClick={sendMessage} className="mt-2 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-10 py-2.5 text-center mr-2 mb-2">
+                                    Edit Profile
+                                </button>
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
                     <p className="font-bold font-2xl "> Today's Schedule </p>
