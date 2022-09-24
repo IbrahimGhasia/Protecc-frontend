@@ -17,6 +17,7 @@
         "@web3uikit/icons": "^0.1.5",
         "@web3uikit/web3": "^0.1.9",
         "@worldcoin/id": "^0.8.0",
+        "@xmtp/xmtp-js": "^6.3.2",
         "axios": "^0.27.2",
         "connectkit": "^0.0.2",
         "dotenv": "^16.0.2",

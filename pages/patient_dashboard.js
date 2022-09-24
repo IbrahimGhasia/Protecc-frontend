@@ -1,11 +1,77 @@
-import { useState } from "react"
+import { useRef, useEffect, useState } from "react"
 import Navbar from "../Components/Header/Navbar"
+import { Client } from '@xmtp/xmtp-js'
+import { useSigner, useAccount } from 'wagmi'
+import { useNotification } from "@web3uikit/core"
+import tableland from "../lib/tableland"
+import Input from "../Components/UI/Input"
+
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false)
     const changeModalState = () => {
         setModalOpen((prev) => !prev)
     }
+
+    const { data: signer, isError, isLoading } = useSigner();
+    const { address, isConnecting, isDisconnected } = useAccount()
+    const dispatch = useNotification()
+
+
+    const dateRef = useRef()
+    const timeRef = useRef()
+    // const specializationRef = useRef()
+
+
+    useEffect(() => {
+        console.log(signer, address)
+        }, []);
+    
+        async function sendMessage() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // get the end user
+            const signer = provider.getSigner();
+            const xmtp = await Client.create(signer)
+        // Start a conversation with XMTP
+        const conversation = await xmtp.conversations.newConversation(
+            address
+        )
+        // Load all messages in the conversation
+        const messages = await conversation.messages()
+        // Send a message
+        await conversation.send('gm')
+        // Listen for new messages in the conversation
+        for await (const message of await conversation.streamMessages()) {
+        console.log(`[${message.senderAddress}]: ${message.content}`)
+        }
+
+        }
+
+        async function submitAppointment(e){
+            e.preventDefault();
+            const appointmentFormData = {
+                date: dateRef.current.value,
+                time: timeRef.current.value,
+                patient: address,
+            }
+
+            console.log(appointmentFormData);
+            const tableName = await tableland.createTable()
+            console.log(tableName);
+
+            
+            await tableland.writeToTable(tableName, appointmentFormData)
+            console.log("Table created and written to")
+
+            dispatch({
+                type: "success",
+                title: "TableLand write done",
+                message: "Appointment submitted succesfully!",
+                position: "bottomL",
+            })
+
+        }
+
     return (
         <div>
             <Navbar />
@@ -105,10 +171,11 @@ export default function Home() {
                                     >
                                         Select Date
                                     </label>
-                                    <input
+                                    <Input
                                         type="date"
                                         name="email"
                                         id="email"
+                                        ref={dateRef}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         placeholder="name@company.com"
                                         required
@@ -121,8 +188,9 @@ export default function Home() {
                                     >
                                         Time
                                     </label>
-                                    <input
+                                    <Input
                                         type="time"
+                                        ref={timeRef}
                                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                                         required
                                     />
@@ -142,17 +210,14 @@ export default function Home() {
                                         <option value="GP" selected>
                                             General Physician
                                         </option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
+                                        <option value="GP">Peadetrician</option>
                                     </select>
                                 </div>
 
                                 <button
                                     type="submit"
                                     className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    onClick={submitAppointment}
                                 >
                                     Confirm Appointment
                                 </button>
