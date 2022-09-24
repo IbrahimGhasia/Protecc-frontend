@@ -39,13 +39,14 @@ export default function Home() {
             <header className="text-gray-600 bg-black/10 body-font">
                 <div className="container mx-auto flex flex-wrap py-5 flex-row md:flex-row width-100 justify-between">
                     <nav className="flex flex-wrap items-center text-base float-left">
-                        <Link href="/EHR">
+                        <Link href="/patient_home">
                             <a className="mr-5 hover:text-gray-900 ">My EHR</a>
                         </Link>
 
-                        <a className="mr-5 hover:text-gray-900 ">Consultations</a>
                         <a className="mr-5 hover:text-gray-900 ">Medication</a>
-                        <a className="mr-5 hover:text-gray-900 ">Health Reports</a>
+                        <Link href="/EHR">
+                        <a className="mr-5 hover:text-gray-900 ">Health Stats</a>
+                        </Link>
                         <a className="mr-5 hover:text-gray-900 ">Support</a>
                     </nav>
                     <nav className="flex flex-wrap items-center text-base float-right ">

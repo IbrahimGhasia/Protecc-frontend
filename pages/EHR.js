@@ -35,13 +35,14 @@ const EHR = () => {
             <header className="text-gray-600 bg-black/10 body-font">
                 <div className="container mx-auto flex flex-wrap py-5 flex-row md:flex-row width-100 justify-between">
                     <nav className="flex flex-wrap items-center text-base float-left">
-                        <Link href="/EHR">
+                        <Link href="/patient_home">
                             <a className="mr-5 hover:text-gray-900 ">My EHR</a>
                         </Link>
 
-                        <a className="mr-5 hover:text-gray-900 ">Consultations</a>
                         <a className="mr-5 hover:text-gray-900 ">Medication</a>
+                        <Link href="/EHR">
                         <a className="mr-5 hover:text-gray-900 ">Health Reports</a>
+                        </Link>
                         <a className="mr-5 hover:text-gray-900 ">Support</a>
                     </nav>
                     <nav className="flex flex-wrap items-center text-base float-right ">
@@ -188,6 +189,9 @@ const EHR = () => {
                         <span className="text-sm text-gray-500 dark:text-gray-400">
                             Weight :- 65kg
                         </span>
+                        <button className="text-white bg-gradient-to-r from-blue-500 to-sky-300 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-base px-5 py-2.5 text-center my-6">
+                                    Connect Smart Watch 
+                                </button>
                         <div className="flex mt-4 space-x-3 md:mt-6"></div>
                     </div>
                 </div>
