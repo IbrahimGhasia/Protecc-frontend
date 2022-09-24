@@ -1,9 +1,7 @@
-import Link from "next/link"
 import { useState } from "react"
 import Navbar_Doc from "../Components/Header/Navbar_Doc"
-import Card from "../Components/Cards/Card"
-import doctor from "./../data/doctors"
-import { PatientCard } from "../Components/Doctor Card Profile/index"
+// import { PatientCard } from "../Components/Doctor Card Profile/index"
+import PatientCard from "../Components/Cards/PatientCard"
 
 export default function Home() {
     return (
@@ -11,26 +9,29 @@ export default function Home() {
             <Navbar_Doc />
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
-                    <p className="font-bold font-2xl "> Today's Schedule </p>
-                    <div className="flex flex-wrap gap-3 py-4">
+                    <p className="font-bold font-2xl ">Today Schedule</p>
+                    <div className="flex flex-wrap gap-10 py-4">
                         <PatientCard
                             profileURL="/patient.jpg"
                             name="Patient 1"
                             issue="Viral fever"
                             time="15min"
                         />
+
                         <PatientCard
                             profileURL="/patient.jpg"
                             name="Patient 2"
                             issue="Viral fever"
                             time="1hour15min"
                         />
+
                         <PatientCard
                             profileURL="/patient.jpg"
                             name="Patient 3"
                             issue="Viral fever"
                             time="3hours"
                         />
+
                         <PatientCard
                             profileURL="/patient.jpg"
                             name="Patient 4"
@@ -39,6 +40,7 @@ export default function Home() {
                         />
                     </div>
                 </div>
+
                 <div className="flex-auto max-w-xs right-0 mx-2">
                     <div className="flex flex-col max-w-auto mx-2 my-2 gap-4">
                         <p className="font-bold font-xl">My Details </p>
