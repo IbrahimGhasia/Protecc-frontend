@@ -37,6 +37,14 @@ export default function Home() {
         [client]
       )
 
+      async function populateAppointments() {
+        const tables = await tableland.checkExistingTable("appointmentTest");
+        console.log(tables);
+        const appointment = await tableland.readAppointmentsFromTable(tables[0].name);
+        console.log(appointment);
+        setAppointments([{...appointment, accepted: false}]);
+    }
+
       const disconnect = () => {
         setClient(null)
       }
@@ -57,10 +65,10 @@ export default function Home() {
             // Say hello to your new friend
             newConvo = conversation;
             const messages = await conversation.messages()
+            console.log(messages)
             const lastMsg = messages[messages.length-1].content
-            addDoctor([{...JSON.parse(lastMsg.content), address: `${conversation.peerAddress}`, conversation: newConvo}]);
+            addDoctor([{...JSON.parse(lastMsg), address: `${conversation.peerAddress}`, conversation: newConvo}]);
             break
-
         }
         for await (const message of await newConvo.streamMessages()) {
             console.log(`[${message.senderAddress}]: ${message.content}`)
@@ -91,7 +99,7 @@ export default function Home() {
 
         }
 
-    const [appointment, setAppointment] = useState([])
+    const [appointments, setAppointments] = useState([])
 
     const [formValue, setFormValue] = useState({
         address: "",
@@ -131,15 +139,21 @@ export default function Home() {
 
         setModalOpen(false)
     }
+    useEffect(() => {
+        populateAppointments();
+    }, [])
+
 
     async function giveLitAccess() {
-        const tables = await tableland.checkExistingTable("myEHRTest")
+        const tables = await tableland.checkExistingTable("myEHRTest2")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {
-            const encryptedObject = await tableland.readFromTable(tables[0].name)
-            console.log(doctors[0].address);
-            await lit.giveAccess(encryptedObject, address, doctors[0].address)
+            const decryptedObject = await tableland
+                .readFromTable(tables[0].name)
+                .then((res) => lit.decryptObject(res, address))
+            console.log(decryptedObject)
+            // await lit.giveAccess(encryptedObject, address, doctors[0].address)
             dispatch({
                 type: "success",
                 title: "Permissions updated",
@@ -147,10 +161,22 @@ export default function Home() {
                 position: "bottomL",
             })
             // Let doctor know!
-            await doctors[0].conversation.send("success")
+            await doctors[0].conversation.send(decryptedObject["PatientDetails"])
         }
 
     }
+
+    const appointmentDetails = Object.keys(appointments).map((k) => (
+        <Card
+                            appointment={appointments[k]}
+                            // name={appointments[k].address}
+                            // date={appointments[k].date}
+                            // time={appointments[k].time}
+                            // accepted={appointments[k].accepted}
+                            // handleClick={sendMessage}
+                            key={k}
+                        />
+    ))
 
     
     return (
@@ -292,11 +318,9 @@ export default function Home() {
                 <div className="flex-auto max-w-auto mx-2">
                     <p className="font-bold font-xl"> Upcoming Appointment </p>
 
-                    {appointment.length === 0 && (
+                    {appointments.length === 0 ? (
                         <p className="text-green-500 font-bold text-lg">No Upcoming Appointment</p>
-                    )}
-                    {appointment &&
-                        appointment.map((appoi) => <Card appointment={appoi} key={appoi.id} />)}
+                    ): appointmentDetails}
                 </div>
                 <div className="flex-auto max-w-sm right-0 mx-2">
                     <div className="flex flex-col max-w-auto mx-2 py-2 gap-4">

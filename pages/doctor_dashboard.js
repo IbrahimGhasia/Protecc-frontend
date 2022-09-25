@@ -50,7 +50,7 @@ export default function Home() {
     console.log(appointments)
     // Listen for new messages in the conversation
     for await (const message of await conversation.streamMessages()) {
-    console.log(`[${message.senderAddress}]: ${message.content}`)
+    console.log(`${message.content}`)
     }
     }
 
