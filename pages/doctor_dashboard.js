@@ -75,6 +75,7 @@ export default function Home() {
                             time={appointments[k].time}
                             accepted={appointments[k].accepted}
                             handleClick={sendMessage}
+                            key={k}
                         />
     ))
 
