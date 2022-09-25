@@ -31,7 +31,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <p className="text-4xl text-center text-white text-bold my-10">WHAT WE DO :-</p>
+            <p className="text-6xl text-center text-white text-bold my-10">⚒️What we do :</p>
 
             <div className="mx-5 grid gap-3 md:grid-cols-2">
                 <WWDCard

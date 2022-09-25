@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Navbar_home = () => {
     return (
-        <nav className=" px-2 md:px-4 py-2.5 rounded">
+        <nav className=" px-2 md:px-4 py-1 rounded">
             <div className="container flex flex-wrap justify-between items-center mx-auto">
                 <Link href="/">
                     <a className="flex items-center justify-center">
@@ -11,7 +11,7 @@ const Navbar_home = () => {
                             xmlns="http://www.w3.org/2000/svg"
                             width="36"
                             height="36"
-                            className="mr-3"
+                            className="ml-3 mt-3"
                             fill="white"
                         >
                             <path
@@ -29,14 +29,14 @@ const Navbar_home = () => {
                     <ul className="flex flex-col p-4 mt-4  rounded-lg bg-transparent md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium ">
                         <li>
                             <Link href="/patient_home">
-                                <button className="text-white bg-gradient-to-r from-blue-500 to-sky-300 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-base px-5 py-2.5 text-center mb-2">
+                                <button className="text-white bg-gradient-to-r from-blue-500 to-sky-300 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                     Sign in as Patient
                                 </button>
                             </Link>
                         </li>
                         <li>
                             <Link href="/doctor_home">
-                                <button className="text-white bg-gradient-to-r from-blue-500 to-sky-300 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-base px-5 py-2.5 text-center  mb-2">
+                                <button className="text-white bg-gradient-to-r from-blue-500 to-sky-300 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-base px-5 py-2.5 text-center">
                                     Sign in as Doctor
                                 </button>
                             </Link>
