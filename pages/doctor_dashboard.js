@@ -18,6 +18,7 @@ export default function Home() {
     const dispatch = useNotification()
 
     const [appointments, setAppointments] = useState([]);
+    const [doctorProfile, setDoctorProfile] = useState({});
 
     const { data: signer, isError, isLoading } = useSigner();
     const { address, isConnecting, isDisconnected } = useAccount()
@@ -30,6 +31,15 @@ export default function Home() {
         setAppointments([{...appointment, accepted: false}]);
     }
 
+    useEffect(() => {
+        async function populateDoctorProfile() {
+            const profile = await fetchDoctorProfile();
+            setDoctorProfile(JSON.parse(profile));
+            console.log(doctorProfile);
+        }
+        populateDoctorProfile();
+    }, [])
+
     async function sendMessage() {
         const xmtp = await Client.create(signer)
     // Start a conversation with XMTP
@@ -37,8 +47,7 @@ export default function Home() {
         address
     )
     // Send a message
-    const message = await fetchDoctorProfile()
-    await conversation.send(message)
+    await conversation.send(doctorProfile)
     // Add dispatch here
     dispatch({
         type: "success",
@@ -101,13 +110,10 @@ export default function Home() {
                                     alt="Doctor"
                                 />
                                 <h5 className="my-1 text-xl font-medium text-gray-900 dark:text-white">
-                                    Dr. Mehta
+                                    Dr. {doctorProfile.FullName}
                                 </h5>
                                 <span className="mb-1 text-md font-medium text-gray-900 dark:text-white">
-                                    General Physician
-                                </span>
-                                <span className="text-sm text-gray-500 dark:text-gray-400">
-                                    Details:-
+                                Specialisation: General Physician
                                 </span>
                                 <span className="text-sm text-gray-500 dark:text-gray-400">
                                     Average Rating :- 4.2/5.0
