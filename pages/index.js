@@ -24,9 +24,15 @@ export default function Home() {
                         <img src="/2icon.svg" className="mx-1"></img>
                         <img src="/3icon.svg" className="mx-1"></img>
                         <img src="/4icon.svg" className="mx-1"></img>
+                        {/* <img src="/5icon.svg" className="mx-1"></img> */}
+                        {/* <img src="/6icon.svg" className="mx-1"></img> */}
+                        <img src="/7icon.svg" className="mx-1"></img>
+                    </div>
+
+                    <div className="flex align-middle mx-7">
+                        <p className="text-white text-2xl content-evenly mx-3">Waitlist :-</p>
                         <img src="/5icon.svg" className="mx-1"></img>
                         <img src="/6icon.svg" className="mx-1"></img>
-                        <img src="/7icon.svg" className="mx-1"></img>
                     </div>
                 </div>
             </div>
