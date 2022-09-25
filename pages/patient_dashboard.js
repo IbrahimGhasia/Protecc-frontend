@@ -71,8 +71,31 @@ export default function Home() {
             break
         }
         for await (const message of await newConvo.streamMessages()) {
-            console.log(`[${message.senderAddress}]: ${message.content}`)
-            break
+            // We're getting case data here
+            console.log(`[${message.senderAddress}]: ${message.content}`);
+            const caseData = {};
+            caseData["CaseData"] = message.content;
+            const tables = await tableland.checkExistingTable("myEHRTest2")
+            if (tables.length === 0) {
+                console.log("Need to register!")
+            } else {
+                const encryptedCase = await lit.normalEncryptObject(caseData, address)
+            dispatch({
+                type: "success",
+                title: "Encrypted case data with Lit",
+                message: "Succesfully encrypted your data!",
+                position: "bottomL",
+            })
+
+            await tableland.writeToTable(tables[0].name, encryptedCase)
+            console.log("Table created and written to")
+            dispatch({
+                type: "success",
+                title: "Uploaded case data to Tableland",
+                message: "Succesfully recorded!",
+                position: "bottomL",
+            })
+            }
         }
 
         }

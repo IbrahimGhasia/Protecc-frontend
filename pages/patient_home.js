@@ -13,6 +13,7 @@ import tableland from "../lib/tableland"
 
 export default function Home() {
     const [walletConnected, setWalletConnected] = useState()
+    const [caseData, setCaseData] = useState({})
 
     const { isConnected, address } = useAccount()
     const { chain } = useNetwork()
@@ -76,11 +77,15 @@ export default function Home() {
             setDataNotAvailable(true)
         } else {
             setDataNotAvailable(false)
+            console.log(tables[0].name)
             const decryptedObject = await tableland
                 .readFromTable(tables[0].name)
                 .then((res) => lit.decryptObject(res, account))
             console.log(decryptedObject)
             setPatientDetails(JSON.parse(decryptedObject["PatientDetails"]))
+            if ("CaseData" in decryptedObject) {
+            setCaseData(JSON.parse(decryptedObject["CaseData"]))
+            }
             console.log(JSON.parse(decryptedObject["PatientDetails"]))
         }
     }
@@ -88,6 +93,12 @@ export default function Home() {
     const ehrDetails = Object.keys(patientDetails).map((k) => (
         <li key={k}>
             {k} : {patientDetails[k]}
+        </li>
+    ))
+
+    const caseDetails = Object.keys(caseData).map((k) => (
+        <li key={k}>
+            {k} : {caseData[k]}
         </li>
     ))
 
@@ -128,6 +139,11 @@ export default function Home() {
                                 </h5>
                                 <hr className="my-2 h-px bg-gray-700 border-2 dark:bg-gray-700" />
                                 <ul className="text-md md:text-2xl">{ehrDetails}</ul>
+                                <h5 className="text-2xl md:text-4xl mb-2 font-bold tracking-tight text-gray-900 dark:text-white">
+                                    Previous cases
+                                </h5>
+                                <ul className="text-md md:text-2xl">{caseDetails}</ul>
+
 
                                 <Link href="/patient_edit">
                                     <div className="text-center">
