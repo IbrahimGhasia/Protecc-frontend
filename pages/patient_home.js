@@ -71,7 +71,7 @@ export default function Home() {
     const [dataNotAvaialable, setDataNotAvailable] = useState()
 
     async function fetchEHR() {
-        const tables = await tableland.checkExistingTable("myEHRTest2")
+        const tables = await tableland.checkExistingTable("myEHRStage")
         if (tables.length === 0) {
             console.log("Need to register!")
             setDataNotAvailable(true)

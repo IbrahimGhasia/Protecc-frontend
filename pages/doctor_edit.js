@@ -111,7 +111,7 @@ export default function Home() {
                 position: "bottomL",
             })
 
-            const tableName = await tableland.createTable("doctorProfileTest")
+            const tableName = await tableland.createTable("doctorProfileStage")
 
             await tableland.writeToTable(tableName, encryptedEHR)
             console.log("Table created and written to")

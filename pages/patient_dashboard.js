@@ -38,7 +38,7 @@ export default function Home() {
     )
 
     async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointmentTest")
+        const tables = await tableland.checkExistingTable("appointment")
         console.log(tables)
         const appointment = await tableland.readAppointmentsFromTable(tables[0].name)
         console.log(appointment)
@@ -75,7 +75,7 @@ export default function Home() {
             console.log(`[${message.senderAddress}]: ${message.content}`);
             const caseData = {};
             caseData["CaseData"] = message.content;
-            const tables = await tableland.checkExistingTable("myEHRTest2")
+            const tables = await tableland.checkExistingTable("myEHRStage")
             if (tables.length === 0) {
                 console.log("Need to register!")
             } else {
@@ -164,7 +164,7 @@ export default function Home() {
     }, [])
 
     async function giveLitAccess() {
-        const tables = await tableland.checkExistingTable("myEHRTest2")
+        const tables = await tableland.checkExistingTable("myEHR")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {
