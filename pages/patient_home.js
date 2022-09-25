@@ -46,7 +46,7 @@ export default function Home() {
              * instead of using signIn(..., redirect: "/user")
              * we get the url from callback and push it to the router to avoid page refreshing
              */
-            push(url)
+            // push(url)
         }
         if (status === "unauthenticated" && isConnected) {
             handleAuth()
