@@ -1,9 +1,16 @@
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Navbar from "../Components/Header/Navbar"
+import { Client } from '@xmtp/xmtp-js'
+import { useSigner, useAccount } from 'wagmi'
+import { useNotification } from "@web3uikit/core"
+import tableland from "../lib/tableland"
+import Input from "../Components/UI/Input"
+
 import Card from "../Components/Cards/Card"
 import doctor from "./../data/doctors"
 import DoctorCard from "../Components/Doctor Card Profile"
 import Link from "next/link"
+import lit from "../lib/lit"
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false)
@@ -11,25 +18,138 @@ export default function Home() {
         setModalOpen((prev) => !prev)
     }
 
+    const { data: signer, isError, isLoading } = useSigner();
+    const { address, isConnecting, isDisconnected } = useAccount()
+    const dispatch = useNotification()
+    const [client, setClient] = useState(null)
+
+    const initClient = useCallback(
+        async (wallet) => {
+          if (wallet && !client) {
+            try {
+              setClient(await Client.create(wallet))
+            } catch (e) {
+              console.error(e)
+              setClient(null)
+            }
+          }
+        },
+        [client]
+      )
+
+      const disconnect = () => {
+        setClient(null)
+      }
+
+      useEffect(() => {
+        signer ? initClient(signer) : disconnect()
+      }, [signer])
+
+      useEffect(() => {
+        if (!client) return
+    
+        const listConversations = async () => {
+          console.log('Waiting for new conversations!')
+          const stream = await client.conversations.stream()
+          var newConvo;
+          for await (const conversation of stream) {
+            console.log(`New conversation started with ${conversation.peerAddress}`)
+            // Say hello to your new friend
+            newConvo = conversation;
+            const messages = await conversation.messages()
+            const lastMsg = messages[messages.length-1].content
+            addDoctor([{...JSON.parse(lastMsg.content), address: `${conversation.peerAddress}`, conversation: newConvo}]);
+            break
+
+        }
+        for await (const message of await newConvo.streamMessages()) {
+            console.log(`[${message.senderAddress}]: ${message.content}`)
+            break
+        }
+
+        }
+        listConversations()
+      }, [client])
+    
+        async function sendMessage() {
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            // get the end user
+            const signer = provider.getSigner();
+            const xmtp = await Client.create(signer)
+        // Start a conversation with XMTP
+        const conversation = await xmtp.conversations.newConversation(
+            address
+        )
+        // Load all messages in the conversation
+        const messages = await conversation.messages()
+        // Send a message
+        await conversation.send('gm')
+        // Listen for new messages in the conversation
+        for await (const message of await conversation.streamMessages()) {
+        console.log(`[${message.senderAddress}]: ${message.content}`)
+        }
+
+        }
+
     const [appointment, setAppointment] = useState([])
 
     const [formValue, setFormValue] = useState({
+        address: "",
         date: "",
         time: "",
         consulate: "General Physician",
     })
 
+    const [doctors, addDoctor] = useState([])
+
     const handleChange = (e) => {
         setFormValue((p) => ({ ...p, [e.target.name]: e.target.value }))
     }
 
-    const handleSubmit = (e) => {
+    const submitAppointment = async (e) => {
         e.preventDefault()
+
+        console.log(formValue);
+        const tableName = await tableland.createAppointmentTable()
+        console.log(tableName);
+
+        formValue.address = address;
+        await tableland.writeUnencryptedToTable(tableName, formValue)
+        console.log("Table created and written to")
+
+        dispatch({
+            type: "success",
+            title: "TableLand write done",
+            message: "Appointment submitted succesfully!",
+            position: "bottomL",
+        })
+
         setAppointment((p) => [
             ...p,
             { ...formValue, id: new Date().toISOString(), doctor: "Dr. Metha" },
         ])
+
         setModalOpen(false)
+    }
+
+    async function giveLitAccess() {
+        const tables = await tableland.checkExistingTable("myEHRTest")
+        if (tables.length === 0) {
+            console.log("Need to register!")
+        } else {
+            const encryptedObject = await tableland.readFromTable(tables[0].name)
+            console.log(doctors[0].address);
+            await lit.giveAccess(encryptedObject, address, doctors[0].address)
+            dispatch({
+                type: "success",
+                title: "Permissions updated",
+                message: "Succesfully gave your EHR access to doctor!",
+                position: "bottomL",
+            })
+            // Let doctor know!
+            await doctors[0].conversation.send("success")
+        }
+
     }
 
     
@@ -102,7 +222,7 @@ export default function Home() {
                             <h3 className="mb-4 text-xl font-medium text-gray-900 dark:text-white">
                                 Book an Appointment
                             </h3>
-                            <form className="space-y-6" action="#" onSubmit={handleSubmit}>
+                            <form className="space-y-6" action="#" onSubmit={submitAppointment}>
                                 <div>
                                     <label
                                         for="email"
@@ -153,18 +273,13 @@ export default function Home() {
                                         <option value="GP" selected>
                                             General Physician
                                         </option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
-                                        <option value="GP">General Physician</option>
+                                        <option value="GP">Peadetrician</option>
                                     </select>
                                 </div>
 
                                 <button
                                     type="submit"
-                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                >
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"                                >
                                     Confirm Appointment
                                 </button>
                             </form>
@@ -187,12 +302,12 @@ export default function Home() {
                     <div className="flex flex-col max-w-auto mx-2 py-2 gap-4">
                         <p className="font-bold font-xl">Who can Access your data? </p>
 
-                        {doctor.length === 0 && (
+                        {doctors.length === 0 && (
                             <p className="text-green-500 font-bold text-lg">
                                 You are free from every doctor keep eating apples
                             </p>
                         )}
-                        {doctor && doctor.map((doc) => <DoctorCard doctor={doc} key={doc.id} />)}
+                        {doctors && doctors.map((doc) => <DoctorCard doctor={doc} allowAccess={giveLitAccess} key={doc.FullName} />)}
                     </div>
                 </div>
             </div>
