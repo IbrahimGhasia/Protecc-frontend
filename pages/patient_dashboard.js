@@ -10,6 +10,7 @@ import Card from "../Components/Cards/Card"
 import doctor from "./../data/doctors"
 import DoctorCard from "../Components/Doctor Card Profile"
 import Link from "next/link"
+import lit from "../lib/lit"
 
 export default function Home() {
     const [modalOpen, setModalOpen] = useState(false)
@@ -61,7 +62,7 @@ export default function Home() {
         }
         for await (const message of await newConvo.streamMessages()) {
             console.log(`[${message.senderAddress}]: ${message.content}`)
-            addDoctor([{...JSON.parse(message.content), address: `${message.senderAddress}`}]);
+            addDoctor([{...JSON.parse(message.content), address: `${message.senderAddress}`, conversation: newConvo}]);
             break
             }
         }
@@ -127,6 +128,26 @@ export default function Home() {
         ])
 
         setModalOpen(false)
+    }
+
+    async function giveLitAccess() {
+        const tables = await tableland.checkExistingTable("myEHRTest")
+        if (tables.length === 0) {
+            console.log("Need to register!")
+        } else {
+            const encryptedObject = await tableland.readFromTable(tables[0].name)
+            console.log(doctors[0].address);
+            await lit.giveAccess(encryptedObject, address, doctors[0].address)
+            dispatch({
+                type: "success",
+                title: "Permissions updated",
+                message: "Succesfully gave your EHR access to doctor!",
+                position: "bottomL",
+            })
+            // Let doctor know!
+            await doctors[0].conversation.send("success")
+        }
+
     }
 
     
@@ -283,7 +304,7 @@ export default function Home() {
                                 You are free from every doctor keep eating apples
                             </p>
                         )}
-                        {doctors && doctors.map((doc) => <DoctorCard doctor={doc} key={doc.FullName} />)}
+                        {doctors && doctors.map((doc) => <DoctorCard doctor={doc} allowAccess={giveLitAccess} key={doc.FullName} />)}
                     </div>
                 </div>
             </div>

@@ -72,13 +72,14 @@ export default function Home() {
     const [patientDetails, setPatientDetails] = useState({})
 
     async function fetchEHR() {
-        const tables = await tableland.checkExistingTable()
+        const tables = await tableland.checkExistingTable("myEHRTest")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {
             const decryptedObject = await tableland
                 .readFromTable(tables[0].name)
                 .then((res) => lit.decryptObject(res, account))
+            console.log(decryptedObject)
             setPatientDetails(JSON.parse(decryptedObject["PatientDetails"]))
             console.log(JSON.parse(decryptedObject["PatientDetails"]))
         }
