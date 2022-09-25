@@ -38,11 +38,15 @@ export default function Home() {
     )
 
     async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointment")
+        const tables = await tableland.checkExistingTable("appointmentStage")
         console.log(tables)
+        if (tables.length === 0) {
+            console.log("Need to register!")
+        } else {
         const appointment = await tableland.readAppointmentsFromTable(tables[0].name)
         console.log(appointment)
         setAppointments([{ ...appointment, accepted: false }])
+        }
     }
 
     const disconnect = () => {
@@ -60,19 +64,28 @@ export default function Home() {
           console.log('Waiting for new conversations!')
           const stream = await client.conversations.stream()
           var newConvo;
+          var lastMsg;
           for await (const conversation of stream) {
             console.log(`New conversation started with ${conversation.peerAddress}`)
             // Say hello to your new friend
             newConvo = conversation;
             const messages = await conversation.messages()
             console.log(messages)
-            const lastMsg = messages[messages.length-1].content
+            lastMsg = messages[messages.length-1].content
             addDoctor([{...JSON.parse(lastMsg), address: `${conversation.peerAddress}`, conversation: newConvo}]);
             break
         }
         for await (const message of await newConvo.streamMessages()) {
             // We're getting case data here
             console.log(`[${message.senderAddress}]: ${message.content}`);
+            if(message.content === lastMsg.content){
+                console.log("Same message")
+                continue;
+            }
+            // Add check for Case Data here
+            if("ChiefComplaint" in JSON.parse(message.content)){
+            console.log(message.content, "creatingtable");
+
             const caseData = {};
             caseData["CaseData"] = message.content;
             const tables = await tableland.checkExistingTable("myEHRStage")
@@ -96,6 +109,7 @@ export default function Home() {
                 position: "bottomL",
             })
             }
+        }
         }
 
         }
@@ -152,10 +166,7 @@ export default function Home() {
             position: "bottomL",
         })
 
-        setAppointment((p) => [
-            ...p,
-            { ...formValue, id: new Date().toISOString(), doctor: "Dr. Metha" },
-        ])
+        setAppointments([{ ...formValue, accepted: false }])
 
         setModalOpen(false)
     }
@@ -164,7 +175,7 @@ export default function Home() {
     }, [])
 
     async function giveLitAccess() {
-        const tables = await tableland.checkExistingTable("myEHR")
+        const tables = await tableland.checkExistingTable("myEHRStage")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {

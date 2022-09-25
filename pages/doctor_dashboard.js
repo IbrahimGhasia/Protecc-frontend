@@ -26,9 +26,13 @@ export default function Home() {
     async function populateAppointments() {
         const tables = await tableland.checkExistingTable("appointmentStage")
         console.log(tables)
+        if (tables.length === 0) {
+            console.log("Need to register!")
+        } else {
         const appointment = await tableland.readAppointmentsFromTable(tables[0].name)
         console.log(appointment)
         setAppointments([{ ...appointment, accepted: false }])
+        }
     }
 
     useEffect(() => {
@@ -64,7 +68,7 @@ export default function Home() {
     }
 
     async function fetchDoctorProfile() {
-        const tables = await tableland.checkExistingTable("doctorProfile")
+        const tables = await tableland.checkExistingTable("doctorProfileStage")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {
