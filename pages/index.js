@@ -1,40 +1,44 @@
-import Link from "next/link"
-import Image from "next/image"
+import WWDCard from "../Components/Cards/WWDCard"
+import Navbar_home from "../Components/Header/Navbar_home"
+
 
 export default function Home() {
     return (
-        <div className="">
-            <Image src="/Medical.jfif" layout="fill" objectFit="cover" priority />
-            {/* <Navbar /> */}
-            <div className="grid v-screen place-items-center mt-10 relative">
-                <h1 className="text-5xl md:text-8xl text-center mt-20 font-bold text-black">
-                    Protecc
-                </h1>
-
-                <div>
-                    <p className="md:text-2xl px-20 mt-7 text-center text-black">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis ex
-                        nec ipsum molestie, a lacinia arcu sollicitudin. Aenean justo lacus, euismod
-                        molestie finibus sit amet, sodales nec sem. Suspendisse eget luctus orci, et
-                        egestas mauris. Donec efficitur feugiat tincidunt.
-                    </p>
+        <div className="bg-gradient-to-r from-indigo-700 to-indigo-300 ">
+            <Navbar_home />
+            <div className="flex-wrap flex justify-center align-center w-full h-screen">
+                <div className="flex items-start my-auto">
+                    <img className=" w-20 self-start" src="/injection.svg"></img>
+                    <img className=" w-80" src="/docicon.png"></img>
+                    <img className=" w-16 self-start" src="/thermo.svg"></img>
                 </div>
-
-                <div className="grid v-screen place-items-center mt-10">
-                    <div className="grid-cols-2">
-                        <Link href="/patient_home">
-                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 md:mr-8 mb-2">
-                                Sign in as Patient
-                            </button>
-                        </Link>
-
-                        <Link href="/doctor_home">
-                            <button className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mb-2">
-                                Sign in as Doctor
-                            </button>
-                        </Link>
+                <div className="flex flex-col mx-10 my-auto">
+                    <p className="text-white text-6xl font-semibold self-center my-5">
+                        Private On-Chain{" "}
+                    </p>
+                    <p className="text-white text-6xl font-semibold self-center my-5">
+                        Health Records
+                    </p>
+                    <div className="flex justify-center align-middle my-5">
+                        <p className="text-white text-2xl content-evenly mx-3">Powered by :-</p>
+                        <img src="/1icon.svg" className="mx-1"></img>
+                        <img src="/2icon.svg" className="mx-1"></img>
+                        <img src="/3icon.svg" className="mx-1"></img>
+                        <img src="/4icon.svg" className="mx-1"></img>
+                        <img src="/5icon.svg" className="mx-1"></img>
+                        <img src="/6icon.svg" className="mx-1"></img>
+                        <img src="/7icon.svg" className="mx-1"></img>
                     </div>
                 </div>
+            </div>
+
+            <p className="text-4xl text-center text-white text-bold my-10">WHAT WE DO :-</p>
+
+            <div className="flex flex-wrap justify-center">
+            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
+            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
+            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
+            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
             </div>
         </div>
     )

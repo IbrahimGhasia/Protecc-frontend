@@ -1,19 +1,21 @@
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import Navbar_Doc from "../Components/Header/Navbar_Doc"
-import Card from "../Components/Cards/Card"
-import doctor from "./../data/doctors"
-import { PatientCard } from "../Components/Doctor Card Profile/index"
+// import { PatientCard } from "../Components/Doctor Card Profile/index"
+import PatientCard from "../Components/Cards/PatientCard"
 import tableland from "../lib/tableland"
 import { useSigner, useAccount } from 'wagmi'
 import { Client } from '@xmtp/xmtp-js'
 import lit from "../lib/lit"
+import { useNotification } from "@web3uikit/core"
+
 
 export default function Home() {
     useEffect(() => {
         populateAppointments();
-        console.log(signer, address);
     }, [])
+
+    const dispatch = useNotification()
 
     const [appointments, setAppointments] = useState([]);
 
@@ -23,9 +25,9 @@ export default function Home() {
     async function populateAppointments() {
         const tables = await tableland.checkExistingTable("appointmentTest");
         console.log(tables);
-        const appointments = await tableland.readAppointmentsFromTable(tables[0].name);
-        console.log(appointments);
-        setAppointments([appointments]);
+        const appointment = await tableland.readAppointmentsFromTable(tables[0].name);
+        console.log(appointment);
+        setAppointments([{...appointment, accepted: false}]);
     }
 
     async function sendMessage() {
@@ -34,12 +36,18 @@ export default function Home() {
     const conversation = await xmtp.conversations.newConversation(
         address
     )
-    // Load all messages in the conversation
-    const messages = await conversation.messages()
     // Send a message
     const message = await fetchDoctorProfile()
     await conversation.send(message)
     // Add dispatch here
+    dispatch({
+        type: "success",
+        title: "Appointment accepted!",
+        message: "Request for data access sent to user!",
+        position: "bottomL",
+    })
+    setAppointments([{...appointments[0], accepted: true}]);
+    console.log(appointments)
     // Listen for new messages in the conversation
     for await (const message of await conversation.streamMessages()) {
     console.log(`[${message.senderAddress}]: ${message.content}`)
@@ -65,12 +73,13 @@ export default function Home() {
                             name={appointments[k].address}
                             date={appointments[k].date}
                             time={appointments[k].time}
+                            accepted={appointments[k].accepted}
                             handleClick={sendMessage}
                         />
     ))
 
     return (
-        <div>
+        <div className="">
             <Navbar_Doc />
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
@@ -79,6 +88,7 @@ export default function Home() {
                          {appointmentDetails}
                     </div>
                 </div>
+
                 <div className="flex-auto max-w-xs right-0 mx-2">
                     <div className="flex flex-col max-w-auto mx-2 my-2 gap-4">
                         <p className="font-bold font-xl">My Details </p>
