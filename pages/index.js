@@ -1,7 +1,6 @@
 import WWDCard from "../Components/Cards/WWDCard"
 import Navbar_home from "../Components/Header/Navbar_home"
 
-
 export default function Home() {
     return (
         <div className="bg-gradient-to-r from-indigo-700 to-indigo-300 ">
@@ -14,7 +13,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col mx-10 my-auto">
                     <p className="text-white text-6xl font-semibold self-center my-5">
-                        Private On-Chain{" "}
+                        Private On-Chain
                     </p>
                     <p className="text-white text-6xl font-semibold self-center my-5">
                         Health Records
@@ -32,13 +31,25 @@ export default function Home() {
                 </div>
             </div>
 
-            <p className="text-4xl text-center text-white text-bold my-10">WHAT WE DO :-</p>
+            <p className="text-6xl text-center text-white text-bold my-10">⚒️What we do :</p>
 
-            <div className="flex flex-wrap justify-center">
-            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
-            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
-            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
-            <WWDCard ques="What is PROTECC?" answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis." />
+            <div className="mx-5 grid gap-3 md:grid-cols-2">
+                <WWDCard
+                    ques="What is PROTECC?"
+                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                />
+                <WWDCard
+                    ques="What is PROTECC?"
+                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                />
+                <WWDCard
+                    ques="What is PROTECC?"
+                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                />
+                <WWDCard
+                    ques="What is PROTECC?"
+                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                />
             </div>
         </div>
     )

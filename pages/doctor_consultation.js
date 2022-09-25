@@ -3,6 +3,7 @@ import TextArea from "../Components/UI/TextArea"
 import Checkbox from "../Components/UI/Checkbox"
 import { useRef, useState } from "react"
 import { useNotification } from "@web3uikit/core"
+import Link from "next/link"
 
 export default function Home() {
     const dispatch = useNotification()
@@ -140,13 +141,14 @@ export default function Home() {
                     >
                         Submit
                     </button>
-                    <button
-                        type="submit"
-                        onClick={submitData}
-                        className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    >
-                        Add Prescription
-                    </button>
+                    <Link href="/doctor_prescription">
+                        <button
+                            type="submit"
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-10 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                        >
+                            Add Prescription
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>

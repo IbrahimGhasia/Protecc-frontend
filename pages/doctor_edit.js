@@ -135,7 +135,7 @@ export default function Home() {
             dispatch({
                 type: "error",
                 title: "Incomplete data field",
-                message: "Please fill all the (mandotory) * data field",
+                message: "Please fill all the * (mandatory) data field",
                 position: "bottomL",
             })
         }
@@ -278,7 +278,18 @@ export default function Home() {
 
                         <div className="grid v-screen place-items-center mt-8">
                             <div className="text-center">
-                                <WorldIDWidget {...widgetProps} />
+                                {/* <WorldIDWidget {...widgetProps} /> */}
+
+                                <button
+                                    type="submit"
+                                    className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                >
+                                    <a
+                                        href={`https://developer.worldcoin.org/hosted/wid_staging_6c961c3261944f2c2062f803aa731c29?signal=${address}`}
+                                    >
+                                        Verify your Identity with WorldCoin
+                                    </a>
+                                </button>
 
                                 <div className="text-center mt-5">
                                     {!spinner ? (
@@ -293,11 +304,11 @@ export default function Home() {
                                         <button
                                             disabled
                                             type="button"
-                                            class="mb-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-md px-20 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
+                                            className="mb-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-md px-20 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center"
                                         >
                                             <svg
                                                 role="status"
-                                                class="inline mr-3 w-4 h-4 text-white animate-spin"
+                                                className="inline mr-3 w-4 h-4 text-white animate-spin"
                                                 viewBox="0 0 100 101"
                                                 fill="none"
                                                 xmlns="http://www.w3.org/2000/svg"

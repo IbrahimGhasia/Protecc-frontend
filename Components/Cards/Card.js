@@ -23,7 +23,7 @@ const Card = (props) => {
                 <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">{doctor}</a>
             </p>
             <p class="font-normal text-gray-700 dark:text-gray-400">
-                Date:-{date} <br/>
+                Date:-{date} <br />
                 Time:-{time}
             </p>
         </a>

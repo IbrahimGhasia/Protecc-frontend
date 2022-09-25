@@ -1,7 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit"
 import Link from "next/link"
 import Navbar from "../Components/Header/Navbar"
-import toast, { Toaster } from "react-hot-toast"
 import { useEffect, useState } from "react"
 import { signIn, useSession } from "next-auth/react"
 import { useAccount, useSigner, useSignMessage, useNetwork } from "wagmi"
@@ -48,7 +47,7 @@ export default function Home() {
              * instead of using signIn(..., redirect: "/user")
              * we get the url from callback and push it to the router to avoid page refreshing
              */
-            push(url)
+            // push(url)
         }
         if (status === "unauthenticated" && isConnected) {
             handleAuth()
