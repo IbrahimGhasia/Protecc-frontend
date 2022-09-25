@@ -35,6 +35,7 @@ export default function Home() {
             const profile = await fetchDoctorProfile();
             setDoctorProfile(JSON.parse(profile));
             console.log(doctorProfile);
+            console.log(JSON.parse(profile))
         }
         populateDoctorProfile();
     }, [])
@@ -46,7 +47,7 @@ export default function Home() {
         address
     )
     // Send a message
-    await conversation.send(doctorProfile)
+    await conversation.send(JSON.stringify(doctorProfile))
     // Add dispatch here
     dispatch({
         type: "success",
