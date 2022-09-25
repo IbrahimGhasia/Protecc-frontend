@@ -4,54 +4,51 @@ import Navbar_Doc from "../Components/Header/Navbar_Doc"
 // import { PatientCard } from "../Components/Doctor Card Profile/index"
 import PatientCard from "../Components/Cards/PatientCard"
 import tableland from "../lib/tableland"
-import { useSigner, useAccount } from 'wagmi'
-import { Client } from '@xmtp/xmtp-js'
+import { useSigner, useAccount } from "wagmi"
+import { Client } from "@xmtp/xmtp-js"
 import lit from "../lib/lit"
 import { useNotification } from "@web3uikit/core"
 
-
 export default function Home() {
     useEffect(() => {
-        populateAppointments();
+        populateAppointments()
     }, [])
 
     const dispatch = useNotification()
 
-    const [appointments, setAppointments] = useState([]);
+    const [appointments, setAppointments] = useState([])
 
-    const { data: signer, isError, isLoading } = useSigner();
+    const { data: signer, isError, isLoading } = useSigner()
     const { address, isConnecting, isDisconnected } = useAccount()
 
     async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointmentTest");
-        console.log(tables);
-        const appointment = await tableland.readAppointmentsFromTable(tables[0].name);
-        console.log(appointment);
-        setAppointments([{...appointment, accepted: false}]);
+        const tables = await tableland.checkExistingTable("appointmentTest")
+        console.log(tables)
+        const appointment = await tableland.readAppointmentsFromTable(tables[0].name)
+        console.log(appointment)
+        setAppointments([{ ...appointment, accepted: false }])
     }
 
     async function sendMessage() {
         const xmtp = await Client.create(signer)
-    // Start a conversation with XMTP
-    const conversation = await xmtp.conversations.newConversation(
-        address
-    )
-    // Send a message
-    const message = await fetchDoctorProfile()
-    await conversation.send(message)
-    // Add dispatch here
-    dispatch({
-        type: "success",
-        title: "Appointment accepted!",
-        message: "Request for data access sent to user!",
-        position: "bottomL",
-    })
-    setAppointments([{...appointments[0], accepted: true}]);
-    console.log(appointments)
-    // Listen for new messages in the conversation
-    for await (const message of await conversation.streamMessages()) {
-    console.log(`[${message.senderAddress}]: ${message.content}`)
-    }
+        // Start a conversation with XMTP
+        const conversation = await xmtp.conversations.newConversation(address)
+        // Send a message
+        const message = await fetchDoctorProfile()
+        await conversation.send(message)
+        // Add dispatch here
+        dispatch({
+            type: "success",
+            title: "Appointment accepted!",
+            message: "Request for data access sent to user!",
+            position: "bottomL",
+        })
+        setAppointments([{ ...appointments[0], accepted: true }])
+        console.log(appointments)
+        // Listen for new messages in the conversation
+        for await (const message of await conversation.streamMessages()) {
+            console.log(`[${message.senderAddress}]: ${message.content}`)
+        }
     }
 
     async function fetchDoctorProfile() {
@@ -62,21 +59,21 @@ export default function Home() {
             const decryptedObject = await tableland
                 .readFromTable(tables[0].name)
                 .then((res) => lit.decryptObject(res, address))
-            const profile = decryptedObject["PatientDetails"];
+            const profile = decryptedObject["PatientDetails"]
             return profile
         }
     }
 
     const appointmentDetails = Object.keys(appointments).map((k) => (
         <PatientCard
-                            profileURL=""
-                            name={appointments[k].address}
-                            date={appointments[k].date}
-                            time={appointments[k].time}
-                            accepted={appointments[k].accepted}
-                            handleClick={sendMessage}
-                            key={k}
-                        />
+            profileURL="/patient.jpg"
+            name={appointments[k].address}
+            date={appointments[k].date}
+            time={appointments[k].time}
+            accepted={appointments[k].accepted}
+            handleClick={sendMessage}
+            key={k}
+        />
     ))
 
     return (
@@ -85,9 +82,7 @@ export default function Home() {
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
                     <p className="font-bold font-2xl "> Today Schedule </p>
-                    <div className="flex flex-wrap gap-3 py-4">
-                         {appointmentDetails}
-                    </div>
+                    <div className="flex flex-wrap gap-3 py-4">{appointmentDetails}</div>
                 </div>
 
                 <div className="flex-auto max-w-xs right-0 mx-2">
