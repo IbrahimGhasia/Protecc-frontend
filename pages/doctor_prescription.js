@@ -9,16 +9,23 @@ export default function Home() {
     const dispatch = useNotification()
 
     const handleSubmit = (event) => {
+        event.preventDefault()
+        console.log(prescriptionRef.current.value.length)
         if (prescriptionRef.current.value.length > 0) {
-            event.preventDefault()
-            preData = {
+            const preData = {
                 Prescription: prescriptionRef.current.value,
             }
+            dispatch({
+                type: "success",
+                title: "Data added Successfully",
+                position: "bottomL",
+            })
+            console.log(preData)
         } else {
             dispatch({
                 type: "error",
                 title: "Incomplete data field",
-                message: "Please fill all the * (mandatory) data field",
+                message: "Please fill all the mandatory (*) data field",
                 position: "bottomL",
             })
         }
@@ -56,8 +63,7 @@ export default function Home() {
                                 rows="10"
                                 className="mt-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="Add the patient Prescription here ..."
-                                // ref={ref}
-                                // value=""
+                                ref={prescriptionRef}
                                 required
                             ></textarea>
 
