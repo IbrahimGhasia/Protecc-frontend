@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import Navbar from "../Components/Header/Navbar"
-import { Client } from '@xmtp/xmtp-js'
-import { useSigner, useAccount } from 'wagmi'
+import { Client } from "@xmtp/xmtp-js"
+import { useSigner, useAccount } from "wagmi"
 import { useNotification } from "@web3uikit/core"
 import tableland from "../lib/tableland"
 import Input from "../Components/UI/Input"
@@ -18,86 +18,88 @@ export default function Home() {
         setModalOpen((prev) => !prev)
     }
 
-    const { data: signer, isError, isLoading } = useSigner();
+    const { data: signer, isError, isLoading } = useSigner()
     const { address, isConnecting, isDisconnected } = useAccount()
     const dispatch = useNotification()
     const [client, setClient] = useState(null)
 
     const initClient = useCallback(
         async (wallet) => {
-          if (wallet && !client) {
-            try {
-              setClient(await Client.create(wallet))
-            } catch (e) {
-              console.error(e)
-              setClient(null)
+            if (wallet && !client) {
+                try {
+                    setClient(await Client.create(wallet))
+                } catch (e) {
+                    console.error(e)
+                    setClient(null)
+                }
             }
-          }
         },
         [client]
-      )
+    )
 
-      async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointmentTest");
-        console.log(tables);
-        const appointment = await tableland.readAppointmentsFromTable(tables[0].name);
-        console.log(appointment);
-        setAppointments([{...appointment, accepted: false}]);
+    async function populateAppointments() {
+        const tables = await tableland.checkExistingTable("appointmentTest")
+        console.log(tables)
+        const appointment = await tableland.readAppointmentsFromTable(tables[0].name)
+        console.log(appointment)
+        setAppointments([{ ...appointment, accepted: false }])
     }
 
-      const disconnect = () => {
+    const disconnect = () => {
         setClient(null)
-      }
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         signer ? initClient(signer) : disconnect()
-      }, [signer])
+    }, [signer])
 
-      useEffect(() => {
+    useEffect(() => {
         if (!client) return
-    
-        const listConversations = async () => {
-          console.log('Waiting for new conversations!')
-          const stream = await client.conversations.stream()
-          var newConvo;
-          for await (const conversation of stream) {
-            console.log(`New conversation started with ${conversation.peerAddress}`)
-            // Say hello to your new friend
-            newConvo = conversation;
-            const messages = await conversation.messages()
-            console.log(messages)
-            const lastMsg = messages[messages.length-1].content
-            addDoctor([{...JSON.parse(lastMsg), address: `${conversation.peerAddress}`, conversation: newConvo}]);
-            break
-        }
-        for await (const message of await newConvo.streamMessages()) {
-            console.log(`[${message.senderAddress}]: ${message.content}`)
-            break
-        }
 
+        const listConversations = async () => {
+            console.log("Waiting for new conversations!")
+            const stream = await client.conversations.stream()
+            var newConvo
+            for await (const conversation of stream) {
+                console.log(`New conversation started with ${conversation.peerAddress}`)
+                // Say hello to your new friend
+                newConvo = conversation
+                const messages = await conversation.messages()
+                console.log(messages)
+                const lastMsg = messages[messages.length - 1].content
+                addDoctor([
+                    {
+                        ...JSON.parse(lastMsg),
+                        address: `${conversation.peerAddress}`,
+                        conversation: newConvo,
+                    },
+                ])
+                break
+            }
+            for await (const message of await newConvo.streamMessages()) {
+                console.log(`[${message.senderAddress}]: ${message.content}`)
+                break
+            }
         }
         listConversations()
-      }, [client])
-    
-        async function sendMessage() {
-            const provider = new ethers.providers.Web3Provider(window.ethereum);
-            // get the end user
-            const signer = provider.getSigner();
-            const xmtp = await Client.create(signer)
+    }, [client])
+
+    async function sendMessage() {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        // get the end user
+        const signer = provider.getSigner()
+        const xmtp = await Client.create(signer)
         // Start a conversation with XMTP
-        const conversation = await xmtp.conversations.newConversation(
-            address
-        )
+        const conversation = await xmtp.conversations.newConversation(address)
         // Load all messages in the conversation
         const messages = await conversation.messages()
         // Send a message
-        await conversation.send('gm')
+        await conversation.send("gm")
         // Listen for new messages in the conversation
         for await (const message of await conversation.streamMessages()) {
-        console.log(`[${message.senderAddress}]: ${message.content}`)
+            console.log(`[${message.senderAddress}]: ${message.content}`)
         }
-
-        }
+    }
 
     const [appointments, setAppointments] = useState([])
 
@@ -117,11 +119,11 @@ export default function Home() {
     const submitAppointment = async (e) => {
         e.preventDefault()
 
-        console.log(formValue);
+        console.log(formValue)
         const tableName = await tableland.createAppointmentTable()
-        console.log(tableName);
+        console.log(tableName)
 
-        formValue.address = address;
+        formValue.address = address
         await tableland.writeUnencryptedToTable(tableName, formValue)
         console.log("Table created and written to")
 
@@ -140,9 +142,8 @@ export default function Home() {
         setModalOpen(false)
     }
     useEffect(() => {
-        populateAppointments();
+        populateAppointments()
     }, [])
-
 
     async function giveLitAccess() {
         const tables = await tableland.checkExistingTable("myEHRTest2")
@@ -163,22 +164,20 @@ export default function Home() {
             // Let doctor know!
             await doctors[0].conversation.send(decryptedObject["PatientDetails"])
         }
-
     }
 
     const appointmentDetails = Object.keys(appointments).map((k) => (
         <Card
-                            appointment={appointments[k]}
-                            // name={appointments[k].address}
-                            // date={appointments[k].date}
-                            // time={appointments[k].time}
-                            // accepted={appointments[k].accepted}
-                            // handleClick={sendMessage}
-                            key={k}
-                        />
+            appointment={appointments[k]}
+            // name={appointments[k].address}
+            // date={appointments[k].date}
+            // time={appointments[k].time}
+            // accepted={appointments[k].accepted}
+            // handleClick={sendMessage}
+            key={k}
+        />
     ))
 
-    
     return (
         <div>
             <Navbar />
@@ -191,7 +190,7 @@ export default function Home() {
 
                         <a className="mr-5 hover:text-gray-900 ">Medication</a>
                         <Link href="/EHR">
-                        <a className="mr-5 hover:text-gray-900 ">Health Stats</a>
+                            <a className="mr-5 hover:text-gray-900 ">Health Stats</a>
                         </Link>
                         <a className="mr-5 hover:text-gray-900 ">Support</a>
                     </nav>
@@ -305,7 +304,8 @@ export default function Home() {
 
                                 <button
                                     type="submit"
-                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"                                >
+                                    className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                >
                                     Confirm Appointment
                                 </button>
                             </form>
@@ -320,7 +320,9 @@ export default function Home() {
 
                     {appointments.length === 0 ? (
                         <p className="text-green-500 font-bold text-lg">No Upcoming Appointment</p>
-                    ): appointmentDetails}
+                    ) : (
+                        appointmentDetails
+                    )}
                 </div>
                 <div className="flex-auto max-w-sm right-0 mx-2">
                     <div className="flex flex-col max-w-auto mx-2 py-2 gap-4">
@@ -331,7 +333,14 @@ export default function Home() {
                                 You are free from every doctor keep eating apples
                             </p>
                         )}
-                        {doctors && doctors.map((doc) => <DoctorCard doctor={doc} allowAccess={giveLitAccess} key={doc.FullName} />)}
+                        {doctors &&
+                            doctors.map((doc) => (
+                                <DoctorCard
+                                    doctor={doc}
+                                    allowAccess={giveLitAccess}
+                                    key={doc.FullName}
+                                />
+                            ))}
                     </div>
                 </div>
             </div>
