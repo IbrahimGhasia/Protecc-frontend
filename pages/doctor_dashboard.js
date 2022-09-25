@@ -24,7 +24,7 @@ export default function Home() {
     const { address, isConnecting, isDisconnected } = useAccount()
 
     async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointmentStage")
+        const tables = await tableland.checkExistingTable("appointmentStage2")
         console.log(tables)
         if (tables.length === 0) {
             console.log("Need to register!")
@@ -68,7 +68,7 @@ export default function Home() {
     }
 
     async function fetchDoctorProfile() {
-        const tables = await tableland.checkExistingTable("doctorProfileStage")
+        const tables = await tableland.checkExistingTable("doctorProfileStage2")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {

@@ -38,7 +38,7 @@ export default function Home() {
     )
 
     async function populateAppointments() {
-        const tables = await tableland.checkExistingTable("appointmentStage")
+        const tables = await tableland.checkExistingTable("appointmentStage2")
         console.log(tables)
         if (tables.length === 0) {
             console.log("Need to register!")
@@ -88,7 +88,7 @@ export default function Home() {
 
             const caseData = {};
             caseData["CaseData"] = message.content;
-            const tables = await tableland.checkExistingTable("myEHRStage")
+            const tables = await tableland.checkExistingTable("myEHRStage2")
             if (tables.length === 0) {
                 console.log("Need to register!")
             } else {
@@ -175,7 +175,7 @@ export default function Home() {
     }, [])
 
     async function giveLitAccess() {
-        const tables = await tableland.checkExistingTable("myEHRStage")
+        const tables = await tableland.checkExistingTable("myEHRStage2")
         if (tables.length === 0) {
             console.log("Need to register!")
         } else {
