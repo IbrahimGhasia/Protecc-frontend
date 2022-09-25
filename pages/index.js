@@ -35,20 +35,23 @@ export default function Home() {
 
             <div className="mx-5 grid gap-3 md:grid-cols-2">
                 <WWDCard
-                    ques="What is PROTECC?"
-                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                    ques="The First Ever Patient-Centric EHR system"
+                    answer="Health records are securely encrypted and accessible only by the patient to ensure full data privacy and ownership.
+                    All case history and previous consultations are stored in one place on-chain for decentralized and efficient access"
+                />
+
+                <WWDCard
+                    ques="Truly decentralized"
+                    answer="Doctors can work independently without the involvement of institutions or hospitals, and they can accept appointments whenever they are available."
+                />
+
+                <WWDCard
+                    ques="Immediate appointments"
+                    answer="End-to-end platform to Book /Reschedule an appointment for an in-person consultation With VERIFIED Practitioners"
                 />
                 <WWDCard
-                    ques="What is PROTECC?"
-                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
-                />
-                <WWDCard
-                    ques="What is PROTECC?"
-                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
-                />
-                <WWDCard
-                    ques="What is PROTECC?"
-                    answer="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur, quam? Commodi dolore velit tempore culpa molestias, adipisci accusamus, laboriosam quos voluptatum, praesentium quam sapiente amet tempora inventore? Officiis, architecto quis."
+                    ques="Changed your mind? No worries"
+                    answer="Patients have granular permissions over who views, edits and appends to their EHR. You can revoke access anytime!"
                 />
             </div>
         </div>

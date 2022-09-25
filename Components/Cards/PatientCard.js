@@ -5,7 +5,16 @@ import TextArea from "../UI/TextArea"
 import Checkbox from "../UI/Checkbox"
 import { useNotification } from "@web3uikit/core"
 
-const PatientCard = ({ profileURL, name, date, time, accepted, conversation, patientDetails, handleClick }) => {
+const PatientCard = ({
+    profileURL,
+    name,
+    date,
+    time,
+    accepted,
+    conversation,
+    patientDetails,
+    handleClick,
+}) => {
     const [modalOpen, setModalOpen] = useState(false)
     const changeModalState = () => {
         setModalOpen((prev) => !prev)
@@ -253,11 +262,7 @@ const PatientCard = ({ profileURL, name, date, time, accepted, conversation, pat
                                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                                     Patient EHR Details
                                                 </h3>
-                                                {Object.keys(patientDetails).map((k) => (
-                                                    <li key={k}>
-                                                        {k} : {patientDetails[k]}
-                                                    </li>
-                                                            ))}
+
                                                 <button
                                                     type="button"
                                                     onClick={changeModalState2}
@@ -280,7 +285,15 @@ const PatientCard = ({ profileURL, name, date, time, accepted, conversation, pat
                                                     <span class="sr-only">Close modal</span>
                                                 </button>
                                             </div>
-                                            <div class="p-6 space-y-6"></div>
+                                            <div class="p-6 space-y-6">
+                                                <ul>
+                                                    {Object.keys(patientDetails).map((k) => (
+                                                        <li key={k} className="text-2xl">
+                                                            {k} : {patientDetails[k]}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
