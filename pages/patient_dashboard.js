@@ -57,29 +57,47 @@ export default function Home() {
         if (!client) return
 
         const listConversations = async () => {
-            console.log("Waiting for new conversations!")
-            const stream = await client.conversations.stream()
-            var newConvo
-            for await (const conversation of stream) {
-                console.log(`New conversation started with ${conversation.peerAddress}`)
-                // Say hello to your new friend
-                newConvo = conversation
-                const messages = await conversation.messages()
-                console.log(messages)
-                const lastMsg = messages[messages.length - 1].content
-                addDoctor([
-                    {
-                        ...JSON.parse(lastMsg),
-                        address: `${conversation.peerAddress}`,
-                        conversation: newConvo,
-                    },
-                ])
-                break
+          console.log('Waiting for new conversations!')
+          const stream = await client.conversations.stream()
+          var newConvo;
+          for await (const conversation of stream) {
+            console.log(`New conversation started with ${conversation.peerAddress}`)
+            // Say hello to your new friend
+            newConvo = conversation;
+            const messages = await conversation.messages()
+            console.log(messages)
+            const lastMsg = messages[messages.length-1].content
+            addDoctor([{...JSON.parse(lastMsg), address: `${conversation.peerAddress}`, conversation: newConvo}]);
+            break
+        }
+        for await (const message of await newConvo.streamMessages()) {
+            // We're getting case data here
+            console.log(`[${message.senderAddress}]: ${message.content}`);
+            const caseData = {};
+            caseData["CaseData"] = message.content;
+            const tables = await tableland.checkExistingTable("myEHRTest2")
+            if (tables.length === 0) {
+                console.log("Need to register!")
+            } else {
+                const encryptedCase = await lit.normalEncryptObject(caseData, address)
+            dispatch({
+                type: "success",
+                title: "Encrypted case data with Lit",
+                message: "Succesfully encrypted your data!",
+                position: "bottomL",
+            })
+
+            await tableland.writeToTable(tables[0].name, encryptedCase)
+            console.log("Table created and written to")
+            dispatch({
+                type: "success",
+                title: "Uploaded case data to Tableland",
+                message: "Succesfully recorded!",
+                position: "bottomL",
+            })
             }
-            for await (const message of await newConvo.streamMessages()) {
-                console.log(`[${message.senderAddress}]: ${message.content}`)
-                break
-            }
+        }
+
         }
         listConversations()
     }, [client])

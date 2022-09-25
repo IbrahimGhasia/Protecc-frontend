@@ -5,7 +5,7 @@ import TextArea from "../UI/TextArea"
 import Checkbox from "../UI/Checkbox"
 import { useNotification } from "@web3uikit/core"
 
-const PatientCard = ({ profileURL, name, date, time, accepted, handleClick }) => {
+const PatientCard = ({ profileURL, name, date, time, accepted, conversation, patientDetails, handleClick }) => {
     const [modalOpen, setModalOpen] = useState(false)
     const changeModalState = () => {
         setModalOpen((prev) => !prev)
@@ -57,10 +57,12 @@ const PatientCard = ({ profileURL, name, date, time, accepted, handleClick }) =>
                 TreatmentGiven: treatmentGivenRef.current.value,
             }
             console.log(doctorConsultationData)
+            await conversation.send(JSON.stringify(doctorConsultationData))
+
             dispatch({
                 type: "success",
-                title: "Encrypted data with Lit",
-                message: "Succesfully encrypted your data!",
+                title: "Sent case record to patient!",
+                message: "Patient can now view the case record!",
                 position: "bottomL",
             })
         } else {
@@ -251,6 +253,11 @@ const PatientCard = ({ profileURL, name, date, time, accepted, handleClick }) =>
                                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
                                                     Patient EHR Details
                                                 </h3>
+                                                {Object.keys(patientDetails).map((k) => (
+                                                    <li key={k}>
+                                                        {k} : {patientDetails[k]}
+                                                    </li>
+                                                            ))}
                                                 <button
                                                     type="button"
                                                     onClick={changeModalState2}

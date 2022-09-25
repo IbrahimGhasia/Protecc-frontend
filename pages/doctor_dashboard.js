@@ -18,6 +18,7 @@ export default function Home() {
 
     const [appointments, setAppointments] = useState([]);
     const [doctorProfile, setDoctorProfile] = useState({});
+    const [patientDetails, setPatientDetails] = useState({});
 
     const { data: signer, isError, isLoading } = useSigner()
     const { address, isConnecting, isDisconnected } = useAccount()
@@ -34,8 +35,6 @@ export default function Home() {
         async function populateDoctorProfile() {
             const profile = await fetchDoctorProfile();
             setDoctorProfile(JSON.parse(profile));
-            console.log(doctorProfile);
-            console.log(JSON.parse(profile))
         }
         populateDoctorProfile();
     }, [])
@@ -55,11 +54,12 @@ export default function Home() {
         message: "Request for data access sent to user!",
         position: "bottomL",
     })
-    setAppointments([{...appointments[0], accepted: true}]);
+    setAppointments([{...appointments[0], accepted: true, conversation: conversation}]);
     console.log(appointments)
     // Listen for new messages in the conversation
     for await (const message of await conversation.streamMessages()) {
     console.log(`${message.content}`)
+    setPatientDetails(JSON.parse(message.content))
     }
     }
 
@@ -84,6 +84,8 @@ export default function Home() {
             time={appointments[k].time}
             accepted={appointments[k].accepted}
             handleClick={sendMessage}
+            conversation={appointments[k].conversation}
+            patientDetails={patientDetails}
             key={k}
         />
     ))
