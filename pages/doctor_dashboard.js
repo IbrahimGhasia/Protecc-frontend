@@ -83,7 +83,7 @@ export default function Home() {
             <Navbar_Doc />
             <div className="flex pt-2 container mx-auto">
                 <div className="flex-auto max-w-auto mx-2 my-2">
-                    <p className="font-bold font-2xl "> Today's Schedule </p>
+                    <p className="font-bold font-2xl "> Today Schedule </p>
                     <div className="flex flex-wrap gap-3 py-4">
                          {appointmentDetails}
                     </div>
